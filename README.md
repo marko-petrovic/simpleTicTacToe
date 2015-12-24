@@ -1,2 +1,2 @@
 # simpleTicTacToe
-Simple TicTacToe game
+TicTacToe sample Android project
