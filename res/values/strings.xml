@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Simple Tic Tac Toe game</string>
+    
+    <string name="activity_main_description">This is simple Tic Tac Toe game done simply. So type in your names and start playing by pressing START button. As simple as that.</string>
+
+</resources>

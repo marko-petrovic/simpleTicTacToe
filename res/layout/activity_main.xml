@@ -1,0 +1,28 @@
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <LinearLayout 
+        android:id="@+id/activity_main_wrapper_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/main_activity_left_right_margin"
+        android:layout_marginRight="@dimen/main_activity_left_right_margin"
+        android:layout_marginTop="@dimen/main_activity_left_right_margin"
+        android:layout_marginBottom="@dimen/main_activity_left_right_margin">
+        
+		<TextView 
+		    android:id="@+id/activity_main_textview_main_description"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:textAlignment="center"
+		    android:text="@string/activity_main_description"/>
+        
+    </LinearLayout>
+
+</RelativeLayout>
