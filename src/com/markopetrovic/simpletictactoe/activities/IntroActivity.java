@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.markopetrovic.simpletictactoe.R;
 import com.markopetrovic.simpletictactoe.managers.TicTacToeManager;
-import com.markopetrovic.simpletictactoe.managers.TicTacToeManager.TransitionType;
 
 public class IntroActivity extends BaseActivity
 {
@@ -74,21 +73,29 @@ public class IntroActivity extends BaseActivity
 		
 		if (!xName.getText().toString().trim().isEmpty() && !oName.getText().toString().trim().isEmpty())
 		{
-			System.out.println("STARTING GAME FOR PLAYERS " + xName.getText().toString() + " and " + oName.getText().toString());
-			
-			//tell TicTacToeManager to take care of this two users who want to play
-			//TicTacToeManager will take their names and check if they already played before
-			//if so, their BoardPlayer models will have Player model with previous scores
-			//if not, they will be created into primitive sharedprefs storage as new Players
-			//and they will anyway get their new BoardPlayer objects to play with
-			//this is pretty simple and primitive logic but we don't really have to 
-			//introduce login logic into this simple game demo app
-			TicTacToeManager.takeCareOfTheseTwoOponents(xName.getText().toString(), oName.getText().toString());
-			
-			//TicTacToeManager prepared BoardPlayers in BoardOponents object so all we have to do now
-			//is to fire up an Intent towards BoardActivity and start playing , but even that will be given to
-			//TicTacToeManager as it's nice to centralize this stuff somewhere as we might have more Activity switching points elsewhere
-			TicTacToeManager.startActivity(this, BoardActivity.class);
+			if (xName.getText().toString().contentEquals(oName.getText().toString())) 
+			{
+				//lets say that players can't have the same name so force them to correct this
+				//TODO some silly toast message or something.. irrelevant issue at this point 
+			}
+			else
+			{
+				System.out.println("STARTING GAME FOR PLAYERS " + xName.getText().toString() + " and " + oName.getText().toString());
+				
+				//tell TicTacToeManager to take care of this two users who want to play
+				//TicTacToeManager will take their names and check if they already played before
+				//if so, their BoardPlayer models will have Player model with previous scores
+				//if not, they will be created into primitive sharedprefs storage as new Players
+				//and they will anyway get their new BoardPlayer objects to play with
+				//this is pretty simple and primitive logic but we don't really have to 
+				//introduce login logic into this simple game demo app
+				TicTacToeManager.takeCareOfTheseTwoOponents(xName.getText().toString(), oName.getText().toString());
+				
+				//TicTacToeManager prepared BoardPlayers in BoardOponents object so all we have to do now
+				//is to fire up an Intent towards BoardActivity and start playing , but even that will be given to
+				//TicTacToeManager as it's nice to centralize this stuff somewhere as we might have more Activity switching points elsewhere
+				TicTacToeManager.startActivity(this, BoardActivity.class);
+			}
 		}
     }
 }

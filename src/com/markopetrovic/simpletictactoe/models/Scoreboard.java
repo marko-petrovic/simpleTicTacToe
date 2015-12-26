@@ -1,11 +1,13 @@
 package com.markopetrovic.simpletictactoe.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Scoreboard 
+public class Scoreboard implements Serializable
 {
 	//Scoreboard is a simple ArrayList of Players who played so far
 	private ArrayList<Player> scoreBoardPlayers;
+	private static final long serialVersionUID = 1L;
 	
 	public static Scoreboard createScoreboard(ArrayList<Player> scoreBoardPlayers) 
 	{

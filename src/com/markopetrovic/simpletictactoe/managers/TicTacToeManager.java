@@ -1,5 +1,6 @@
 package com.markopetrovic.simpletictactoe.managers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -13,6 +14,11 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.markopetrovic.simpletictactoe.R;
+import com.markopetrovic.simpletictactoe.models.BoardOponents;
+import com.markopetrovic.simpletictactoe.models.BoardPlayer;
+import com.markopetrovic.simpletictactoe.models.Player;
+import com.markopetrovic.simpletictactoe.models.Scoreboard;
+import com.markopetrovic.simpletictactoe.utils.ObjectSerializer;
 
 public class TicTacToeManager extends Application 
 {
@@ -30,6 +36,8 @@ public class TicTacToeManager extends Application
 	public static SharedPreferences appPreferences;
 	public static int deviceScreenWidth;
     public static int deviceScreenHeight;
+    public static Scoreboard scoreboardPlayers;
+    public static BoardOponents boardOponents;
 	
 	private static TicTacToeManager sInstance;
 	
@@ -77,23 +85,51 @@ public class TicTacToeManager extends Application
             deviceScreenHeight = display.getHeight();
         }
         
-        System.out.println("SCREEN DIMENSIONS ARE ");
-        System.out.println("deviceScreenWidth is " + deviceScreenWidth);
-        System.out.println("deviceScreenHeight is " + deviceScreenHeight);
+//        System.out.println("SCREEN DIMENSIONS ARE ");
+//        System.out.println("deviceScreenWidth is " + deviceScreenWidth);
+//        System.out.println("deviceScreenHeight is " + deviceScreenHeight);
     }
 
-	//preferences 
+	//preferences and loading stuff from them
+	//we use prefs for storing player scores in this simple app
+	//that means that we serialize and deserialize Scoreboard into prefs
+	//this is more efficient approach than using heavy Gson for such simple usecase
+	//as our Player objects have only String and int values, this is pretty light and safe to serialize and deserialize
+	//we won't be using Parcelable interface here cos we aren't communicating between processes so we don't need speed
+	//and if Android changes Parcelable API in the meantime, we have no choice but to raise white flag
+	//byte[] to String and back is in my opinion fair approach to our data storing usecase
 	public static void loadAppPreferences()
 	{
 		appPreferences = sInstance.getApplicationContext().getSharedPreferences("appPrefs", MODE_PRIVATE);
+		
+		//now get scoreboard arraylist of Players
+		//if app was never used to play tic tac toe, result will be empty array [], exactly what we need
+		try 
+		{
+			scoreboardPlayers = (Scoreboard) ObjectSerializer.deserializeObject
+					(appPreferences.getString("SCOREBOARD", ObjectSerializer.serializeObject(Scoreboard.createScoreboard(new ArrayList<Player>()))));
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
 	}
 	
-	//setting app preference with any String as ID and preference is String
-	public static void setAppPreference(String someStringValue, String prefValue)
+	//method to save scoreboardPlayers into shared prefs by overriding over already saved scoreboard in prefs
+	public static void updateScoreboard(Scoreboard scoreboardPlayers)
 	{
 		SharedPreferences.Editor appPrefsEditor = appPreferences.edit();
-		appPrefsEditor.putString(someStringValue, prefValue);
-		appPrefsEditor.commit();
+		
+        try 
+        {
+        	appPrefsEditor.putString("SCOREBOARD", ObjectSerializer.serializeObject(scoreboardPlayers));
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
+        
+        appPrefsEditor.commit();
 	}
 
 	//setting current Activity
@@ -119,12 +155,87 @@ public class TicTacToeManager extends Application
 	//taking care of players is here
 	public static void takeCareOfTheseTwoOponents(String xPlayer, String oPlayer)
 	{
-		
+		if (scoreboardPlayers.getScoreBoardPlayers() != null && scoreboardPlayers.getScoreBoardPlayers().size() != 0) 
+		{
+			Player xPlayerObj = null;
+			Player oPlayerObj = null;
+			boolean xFound = false;
+			boolean oFound = false;
+			
+			//loop through all players from scoreboard and see if there's one named as any of the two who will play now
+			//this is silly without a way to login players, but it's silly approach in this demo simple app
+			//not to have doubled entries in our scoreboard
+			for (int i = 0; i < scoreboardPlayers.getScoreBoardPlayers().size(); i++) 
+			{
+				if (scoreboardPlayers.getScoreBoardPlayers().get(i).getName().contentEquals(xPlayer) && !xFound) 
+				{
+					//player found
+					xPlayerObj = Player.createPlayer
+					(
+						scoreboardPlayers.getScoreBoardPlayers().get(i).getName(),
+						scoreboardPlayers.getScoreBoardPlayers().get(i).getMatchesWon(),
+						scoreboardPlayers.getScoreBoardPlayers().get(i).getMatchesLost()
+					);
+					xFound = true;
+				}
+				else if (scoreboardPlayers.getScoreBoardPlayers().get(i).getName().contentEquals(oPlayer) && !oFound) 
+				{
+					//player found
+					oPlayerObj = Player.createPlayer
+					(
+						scoreboardPlayers.getScoreBoardPlayers().get(i).getName(),
+						scoreboardPlayers.getScoreBoardPlayers().get(i).getMatchesWon(),
+						scoreboardPlayers.getScoreBoardPlayers().get(i).getMatchesLost()
+					);
+					oFound = true;
+				}
+			}
+			
+			//now lets construct boardOponents
+			if (!xFound) 
+			{
+				xPlayerObj = Player.createPlayer(xPlayer, 0, 0);
+			}
+			
+			if (!oFound) 
+			{
+				oPlayerObj = Player.createPlayer(oPlayer, 0, 0);
+			}
+			
+			//finally
+			boardOponents = BoardOponents.createBoardOponents
+				(
+					BoardPlayer.createBoardPlayer
+					(
+						xPlayerObj, 0, 0
+					), 
+					BoardPlayer.createBoardPlayer
+					(
+						oPlayerObj, 0, 0
+					)
+				);
+		}
+		else
+		{
+			//game is started for the very first time so there's nobody in scoreboard arraylist
+			//therefore, create brand new boardOponents and boardPlayers
+			boardOponents = BoardOponents.createBoardOponents
+			(
+				BoardPlayer.createBoardPlayer
+				(
+					Player.createPlayer(xPlayer, 0, 0), 0, 0
+				), 
+				BoardPlayer.createBoardPlayer
+				(
+					Player.createPlayer(oPlayer, 0, 0), 0, 0
+				)
+			);
+		}
 	}
 	
 	//this is maybe not too necessary in our simple demo app case, but if we want to pass arguments for intent.putExtra
 	//we can prepare them into HashMap<String, String> and pass it as parameter in this method
-	public static void startActivity(Activity context, Class activity, HashMap<String, String> arguments, TransitionType transition)
+	public static void startActivity(Activity context, @SuppressWarnings("rawtypes") Class activity, HashMap<String, String> arguments, TransitionType transition)
 	{
 		//define intent, add flags, arguments and set transition
 		final Intent intent = new Intent(context, activity);
