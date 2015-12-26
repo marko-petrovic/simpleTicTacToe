@@ -10,7 +10,6 @@ import android.view.WindowManager;
 
 public class TicTacToeManager extends Application 
 {
-	private static Context context;
 	private static Context currentContext;
 	public static SharedPreferences appPreferences;
 	public static int deviceScreenWidth;
@@ -31,8 +30,7 @@ public class TicTacToeManager extends Application
 		sInstance = this;
         sInstance.initializeInstance();
 
-        //get Application context
-		TicTacToeManager.context = getApplicationContext();
+		System.out.println("APPLICATION CREATED");
 	}
 	
 	private void initializeInstance() 
@@ -64,18 +62,16 @@ public class TicTacToeManager extends Application
             deviceScreenWidth = display.getWidth();
             deviceScreenHeight = display.getHeight();
         }
+        
+        System.out.println("SCREEN DIMENSIONS ARE ");
+        System.out.println("deviceScreenWidth is " + deviceScreenWidth);
+        System.out.println("deviceScreenHeight is " + deviceScreenHeight);
     }
 
-	//application context getter
-	public static Context getAppContext()
-	{
-		return TicTacToeManager.context;
-	}
-	
 	//preferences 
 	public static void loadAppPreferences()
 	{
-		appPreferences = TicTacToeManager.getAppContext().getSharedPreferences("appPrefs", MODE_PRIVATE);
+		appPreferences = sInstance.getApplicationContext().getSharedPreferences("appPrefs", MODE_PRIVATE);
 	}
 	
 	//setting app preference with any String as ID and preference is String
@@ -103,6 +99,6 @@ public class TicTacToeManager extends Application
 	//getting Strings throughout the app
 	public static String getStringValue(int resId)
 	{
-		return TicTacToeManager.getAppContext().getResources().getString(resId);
+		return sInstance.getApplicationContext().getResources().getString(resId);
 	}
 }

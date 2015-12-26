@@ -10,7 +10,7 @@
         android:targetSdkVersion="22" />
 
     <application
-        android:name="com.markopetrovic.simpletictactoe"
+        android:name=".managers.TicTacToeManager"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:logo="@drawable/ic_launcher"

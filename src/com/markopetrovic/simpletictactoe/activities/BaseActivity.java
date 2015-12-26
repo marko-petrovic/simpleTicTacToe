@@ -8,7 +8,7 @@ import com.markopetrovic.simpletictactoe.managers.TicTacToeManager;
 
 public class BaseActivity extends Activity 
 {
-	public Typeface defaultFont;
+	public Typeface defaultFont; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -16,7 +16,7 @@ public class BaseActivity extends Activity
 		super.onCreate(savedInstanceState);
 		
 		//fonts
-//		defaultFont = Typeface.createFromAsset(TicTacToeManager.getAppContext().getAssets(), "fonts/TitilliumWeb-Regular.ttf");
+		defaultFont = Typeface.createFromAsset(TicTacToeManager.getInstance().getAssets(), "fonts/TitilliumWeb-Regular.ttf");
 	}
 	
 	@Override
@@ -24,7 +24,7 @@ public class BaseActivity extends Activity
 	{
 		super.onResume();
 		
-		//set current Activity
-		TicTacToeManager.setCurrentContext(this);
+//		//set current Activity
+//		TicTacToeManager.setCurrentContext(this);
 	}
 }
