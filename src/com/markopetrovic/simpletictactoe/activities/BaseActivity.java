@@ -17,6 +17,8 @@ public class BaseActivity extends Activity
 		
 		//fonts
 		defaultFont = Typeface.createFromAsset(TicTacToeManager.getInstance().getAssets(), "fonts/TitilliumWeb-Regular.ttf");
+		
+		TicTacToeManager.getInstance();
 	}
 	
 	@Override
@@ -26,5 +28,10 @@ public class BaseActivity extends Activity
 		
 //		//set current Activity
 //		TicTacToeManager.setCurrentContext(this);
+	}
+	
+	public void setUIstuff() 
+	{
+		//override it in child Activities
 	}
 }

@@ -16,12 +16,23 @@
 	    <item name="android:paddingLeft">@dimen/editTextPaddingLeftAndRight</item>
 	    <item name="android:paddingRight">@dimen/editTextPaddingLeftAndRight</item>
 	    <item name="android:textCursorDrawable">@null</item>
+	    <item name="android:maxLines">1</item>
+	    <item name="android:gravity">center</item>
+	    <item name="android:singleLine">true</item>
+	    <item name="android:maxLength">10</item>
 	</style>
 	
-    <!-- style for TextView components -->
+    <!-- styles for TextView components -->
     <style name="TicTacToeTextViewStyle" parent="@android:style/Widget.TextView">
 	    <item name="android:textColor">@color/gray_dark</item>
 	    <item name="android:textSize">13sp</item>
+	    <item name="android:gravity">center</item>
+	    <item name="android:textStyle">normal</item>
+	</style>
+	
+    <style name="TicTacToeTextViewSmallStyle" parent="@android:style/Widget.TextView">
+	    <item name="android:textColor">@color/gray_dark</item>
+	    <item name="android:textSize">11sp</item>
 	    <item name="android:gravity">center</item>
 	    <item name="android:textStyle">normal</item>
 	</style>
@@ -37,7 +48,7 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:adjustViewBounds">true</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:clickable">true</item>
     </style>
 

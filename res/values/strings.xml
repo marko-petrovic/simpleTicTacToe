@@ -2,7 +2,17 @@
 <resources>
 
     <string name="app_name">Simple Tic Tac Toe game</string>
+    <string name="activity_name_board">Tic Tac Toe game board</string>
     
     <string name="activity_main_description">This is simple Tic Tac Toe game done simply. So type in your names and start playing by pressing START button. As simple as that.</string>
-
+	
+    <string name="activity_main_player_X_enter_name">X player\'s name</string>
+    <string name="activity_main_player_O_enter_name">O player\'s name</string>
+    <string name="activity_main_player_X_hint_name">your name here</string>
+    <string name="activity_main_player_O_hint_name">your name here</string>
+    <string name="activity_main_button_text">START PLAYING</string>
+    
+    <string name="activity_main_error_empty_name_field">name can not be empty</string>
+    
+    
 </resources>

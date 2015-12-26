@@ -16,4 +16,7 @@
     <dimen name="editTextHeight">30dp</dimen>
     <dimen name="editTextPaddingLeftAndRight">5dp</dimen>
     
+    <!-- Margins -->
+    <dimen name="editTextMarginBottom">8dp</dimen>
+    
 </resources>

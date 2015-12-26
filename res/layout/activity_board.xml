@@ -7,7 +7,7 @@
     tools:context="${relativePackage}.${activityClass}" >
 
     <LinearLayout 
-        android:id="@+id/activity_main_wrapper_linear_layout"
+        android:id="@+id/activity_board_wrapper_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -19,7 +19,7 @@
         android:layout_marginBottom="@dimen/activity_vertical_margin">
         
 		<TextView 
-		    android:id="@+id/activity_main_textview_main_description"
+		    android:id="@+id/activity_board_textview_board_description"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:text="@string/activity_main_description"
@@ -31,14 +31,14 @@
 		    android:layout_weight="1"></LinearLayout>
 		
 		<TextView 
-		    android:id="@+id/activity_main_textview_x_player_desc"
+		    android:id="@+id/activity_board_textview_x_player_desc"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:text="@string/activity_main_player_X_enter_name"
 		    android:theme="@style/TicTacToeTextViewSmallStyle"/>
 		
 		<EditText 
-		    android:id="@+id/activity_main_edittext_x_player"
+		    android:id="@+id/activity_board_edittext_x_player"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:hint="@string/activity_main_player_X_hint_name"
@@ -46,14 +46,14 @@
 		    android:layout_marginBottom="@dimen/editTextMarginBottom"/>
 		
 		<TextView 
-		    android:id="@+id/activity_main_textview_o_player_desc"
+		    android:id="@+id/activity_board_textview_o_player_desc"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:text="@string/activity_main_player_O_enter_name"
 		    android:theme="@style/TicTacToeTextViewSmallStyle"/>
 		
 		<EditText 
-		    android:id="@+id/activity_main_edittext_o_player"
+		    android:id="@+id/activity_board_edittext_o_player"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:hint="@string/activity_main_player_O_hint_name"
@@ -61,7 +61,7 @@
 		    android:layout_marginBottom="@dimen/editTextMarginBottom"/>
 		
 		<Button 
-		    android:id="@+id/activity_main_button_start_game"
+		    android:id="@+id/activity_board_button_start_game"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:text="@string/activity_main_button_text"
