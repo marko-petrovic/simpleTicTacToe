@@ -3,23 +3,70 @@ package com.markopetrovic.simpletictactoe.managers;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.graphics.Point;
+import android.view.Display;
+import android.view.WindowManager;
 
 public class TicTacToeManager extends Application 
 {
 	private static Context context;
 	private static Context currentContext;
 	public static SharedPreferences appPreferences;
+	public static int deviceScreenWidth;
+    public static int deviceScreenHeight;
+	
+	private static TicTacToeManager sInstance;
+	
+    public static TicTacToeManager getInstance() 
+    {
+        return sInstance;
+    }
 
 	public void onCreate()
 	{
 		super.onCreate();
+		
+		//get Singleton instance of Application and initialize other stuff
+		sInstance = this;
+        sInstance.initializeInstance();
 
+        //get Application context
 		TicTacToeManager.context = getApplicationContext();
-
-		loadAppPreferences();
 	}
+	
+	private void initializeInstance() 
+	{
+		//get screen dimens values here, we can use them for XO fields dimensions later
+        screenConfiguration();
+		
+		// set application shared prefs
+        loadAppPreferences();
+    }
+	
+	@SuppressWarnings("deprecation")
+	public void screenConfiguration() 
+	{
+        Configuration config = getResources().getConfiguration();
 
-	//application context
+        Point size = new Point();
+        WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+
+        try 
+        {
+            display.getSize(size);
+            deviceScreenWidth = size.x;
+            deviceScreenHeight = size.y;
+        } 
+        catch (NoSuchMethodError e) 
+        {
+            deviceScreenWidth = display.getWidth();
+            deviceScreenHeight = display.getHeight();
+        }
+    }
+
+	//application context getter
 	public static Context getAppContext()
 	{
 		return TicTacToeManager.context;
@@ -40,11 +87,14 @@ public class TicTacToeManager extends Application
 	}
 
 	//setting current Activity
+	//careful with setting this value cos with Activity recreations you might create
+	//possible memory leaks if reference is left and Activity or Fragment is recreated
 	public static Context getCurrentContext() 
 	{
 		return currentContext;
 	}
 
+	//setting current Context if we need it
 	public static void setCurrentContext(Context currentContext) 
 	{
 		TicTacToeManager.currentContext = currentContext;
