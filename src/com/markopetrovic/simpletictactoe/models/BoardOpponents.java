@@ -1,18 +1,18 @@
 package com.markopetrovic.simpletictactoe.models;
 
-public class BoardOponents 
+public class BoardOpponents 
 {
 	//this is a model container class of the two board players
 	
-	public static BoardOponents createBoardOponents(BoardPlayer xPlayer, BoardPlayer oPlayer) 
+	public static BoardOpponents createBoardOpponents(BoardPlayer xPlayer, BoardPlayer oPlayer) 
 	{
-		return new BoardOponents(xPlayer, oPlayer);
+		return new BoardOpponents(xPlayer, oPlayer);
 	}
 
 	private BoardPlayer xPlayer;
 	private BoardPlayer oPlayer;
 	
-	private BoardOponents(BoardPlayer xPlayer, BoardPlayer oPlayer)
+	private BoardOpponents(BoardPlayer xPlayer, BoardPlayer oPlayer)
 	{
 		super();
 		this.xPlayer = xPlayer;

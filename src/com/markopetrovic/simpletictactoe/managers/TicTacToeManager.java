@@ -14,7 +14,8 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.markopetrovic.simpletictactoe.R;
-import com.markopetrovic.simpletictactoe.models.BoardOponents;
+import com.markopetrovic.simpletictactoe.activities.ScoreBoardTableActivity;
+import com.markopetrovic.simpletictactoe.models.BoardOpponents;
 import com.markopetrovic.simpletictactoe.models.BoardPlayer;
 import com.markopetrovic.simpletictactoe.models.Player;
 import com.markopetrovic.simpletictactoe.models.Scoreboard;
@@ -27,17 +28,13 @@ public class TicTacToeManager extends Application
 		SLIDE_UP, SLIDE_DOWN, SLIDE_LEFT, SLIDE_RIGHT
 	};
 
-	public enum PreferenceNames
-	{
-		SCOREBOARD
-	};
-	
 	private static Context currentContext;
 	public static SharedPreferences appPreferences;
 	public static int deviceScreenWidth;
     public static int deviceScreenHeight;
     public static Scoreboard scoreboardPlayers;
-    public static BoardOponents boardOponents;
+    public static BoardOpponents boardOponents;
+    private static int indexX, indexO;
 	
 	private static TicTacToeManager sInstance;
 	
@@ -63,7 +60,7 @@ public class TicTacToeManager extends Application
         screenConfiguration();
 		
 		// set application shared prefs
-        loadAppPreferences();
+        loadScoreboard();
     }
 	
 	@SuppressWarnings("deprecation")
@@ -98,7 +95,7 @@ public class TicTacToeManager extends Application
 	//we won't be using Parcelable interface here cos we aren't communicating between processes so we don't need speed
 	//and if Android changes Parcelable API in the meantime, we have no choice but to raise white flag
 	//byte[] to String and back is in my opinion fair approach to our data storing usecase
-	public static void loadAppPreferences()
+	public static void loadScoreboard()
 	{
 		appPreferences = sInstance.getApplicationContext().getSharedPreferences("appPrefs", MODE_PRIVATE);
 		
@@ -116,7 +113,7 @@ public class TicTacToeManager extends Application
 	}
 	
 	//method to save scoreboardPlayers into shared prefs by overriding over already saved scoreboard in prefs
-	public static void updateScoreboard(Scoreboard scoreboardPlayers)
+	public static void updateScoreboard(Activity anyBoardActivity)
 	{
 		SharedPreferences.Editor appPrefsEditor = appPreferences.edit();
 		
@@ -130,28 +127,69 @@ public class TicTacToeManager extends Application
         }
         
         appPrefsEditor.commit();
-	}
-
-	//setting current Activity
-	//careful with setting this value cos with Activity recreations you might create
-	//possible memory leaks if reference is left and Activity or Fragment is recreated
-	public static Context getCurrentContext() 
-	{
-		return currentContext;
-	}
-
-	//setting current Context if we need it
-	public static void setCurrentContext(Context currentContext) 
-	{
-		TicTacToeManager.currentContext = currentContext;
+        
+        //we will call this method only when match is over, therefore now when updating is done
+        //app can transit into ScoreBoardTableActivity, that's why we have anyBoardActivity
+        startActivity(anyBoardActivity, ScoreBoardTableActivity.class);
 	}
 	
-	//getting Strings throughout the app
-	public static String getStringValue(int resId)
+	//this is called when match is over
+	//players gave up playing more games, so app has to take their scores and write them into
+	//scoreBoard. That's where we use indexes, in order not to loop again through arraylist
+	//if indexes are -1 that tells us that this were totally new players to we have to 
+	//add them to the end of arraylist as new entries
+	//otherwise, just change values of scoreBoard objects at indexes
+	//after this, updateScoreboard() and we're done so app can go to ScoreBoardTableActivity
+	public static void recordResultsFromThisMatch(Activity anyBoardActivity)
 	{
-		return sInstance.getApplicationContext().getResources().getString(resId);
+		//for player who was X
+		if (indexX != -1) 
+		{
+			//just update player at this index
+			scoreboardPlayers.getScoreBoardPlayers().get(indexX).setMatchesWon
+			(boardOponents.getxPlayer().getCurrentWins() + boardOponents.getxPlayer().getPlayer().getMatchesWon());
+			
+			scoreboardPlayers.getScoreBoardPlayers().get(indexX).setMatchesLost
+			(boardOponents.getxPlayer().getCurrentLoses() + boardOponents.getxPlayer().getPlayer().getMatchesLost());
+		}
+		else
+		{
+			//add player into arraylist as a totally new player in scoreboard
+			Player resultingXPlayer = Player.createPlayer
+			(
+				boardOponents.getxPlayer().getPlayer().getName(),
+				boardOponents.getxPlayer().getCurrentWins(),
+				boardOponents.getxPlayer().getCurrentLoses()
+			);
+			scoreboardPlayers.getScoreBoardPlayers().add(resultingXPlayer);
+		}
+		
+		//for player who was O, exactly the same as above
+		if (indexO != -1) 
+		{
+			//just update player at this index
+			scoreboardPlayers.getScoreBoardPlayers().get(indexO).setMatchesWon
+			(boardOponents.getoPlayer().getCurrentWins() + boardOponents.getoPlayer().getPlayer().getMatchesWon());
+			
+			scoreboardPlayers.getScoreBoardPlayers().get(indexO).setMatchesLost
+			(boardOponents.getoPlayer().getCurrentLoses() + boardOponents.getoPlayer().getPlayer().getMatchesLost());
+		}
+		else
+		{
+			//add new player in scoreboard
+			Player resultingOPlayer = Player.createPlayer
+			(
+				boardOponents.getoPlayer().getPlayer().getName(),
+				boardOponents.getoPlayer().getCurrentWins(),
+				boardOponents.getoPlayer().getCurrentLoses()
+			);
+			scoreboardPlayers.getScoreBoardPlayers().add(resultingOPlayer);
+		}
+		
+		//now when we're done updating values, call updateScoreboard()
+		updateScoreboard(anyBoardActivity);
 	}
-	
+
 	//taking care of players is here
 	public static void takeCareOfTheseTwoOponents(String xPlayer, String oPlayer)
 	{
@@ -177,6 +215,7 @@ public class TicTacToeManager extends Application
 						scoreboardPlayers.getScoreBoardPlayers().get(i).getMatchesLost()
 					);
 					xFound = true;
+					indexX = i;
 				}
 				else if (scoreboardPlayers.getScoreBoardPlayers().get(i).getName().contentEquals(oPlayer) && !oFound) 
 				{
@@ -188,6 +227,7 @@ public class TicTacToeManager extends Application
 						scoreboardPlayers.getScoreBoardPlayers().get(i).getMatchesLost()
 					);
 					oFound = true;
+					indexO = i;
 				}
 			}
 			
@@ -195,15 +235,17 @@ public class TicTacToeManager extends Application
 			if (!xFound) 
 			{
 				xPlayerObj = Player.createPlayer(xPlayer, 0, 0);
+				indexX = -1;
 			}
 			
 			if (!oFound) 
 			{
 				oPlayerObj = Player.createPlayer(oPlayer, 0, 0);
+				indexO = -1;
 			}
 			
 			//finally
-			boardOponents = BoardOponents.createBoardOponents
+			boardOponents = BoardOpponents.createBoardOpponents
 				(
 					BoardPlayer.createBoardPlayer
 					(
@@ -219,7 +261,7 @@ public class TicTacToeManager extends Application
 		{
 			//game is started for the very first time so there's nobody in scoreboard arraylist
 			//therefore, create brand new boardOponents and boardPlayers
-			boardOponents = BoardOponents.createBoardOponents
+			boardOponents = BoardOpponents.createBoardOpponents
 			(
 				BoardPlayer.createBoardPlayer
 				(
@@ -230,6 +272,9 @@ public class TicTacToeManager extends Application
 					Player.createPlayer(oPlayer, 0, 0), 0, 0
 				)
 			);
+			
+			indexX = -1;
+			indexO = -1;
 		}
 	}
 	
@@ -274,8 +319,28 @@ public class TicTacToeManager extends Application
 	}
 	
 	//simplified starting of Activity without unnecessary transitions and extras
-	public static void startActivity(Activity context, Class activity)
+	public static void startActivity(Activity context, @SuppressWarnings("rawtypes") Class activity)
 	{
 		TicTacToeManager.startActivity(context, activity, null, null);
+	}
+	
+	//setting current Activity
+	//careful with setting this value cos with Activity recreations you might create
+	//possible memory leaks if reference is left and Activity or Fragment is recreated
+	public static Context getCurrentContext() 
+	{
+		return currentContext;
+	}
+
+	//setting current Context if we need it
+	public static void setCurrentContext(Context currentContext) 
+	{
+		TicTacToeManager.currentContext = currentContext;
+	}
+	
+	//getting Strings throughout the app
+	public static String getStringValue(int resId)
+	{
+		return sInstance.getApplicationContext().getResources().getString(resId);
 	}
 }

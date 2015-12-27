@@ -22,49 +22,127 @@
 		    android:id="@+id/activity_board_textview_board_description"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
-		    android:text="@string/activity_main_description"
+		    android:text="@string/activity_board_description"
 		    android:theme="@style/TicTacToeTextViewStyle"/>
+		
+		<LinearLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal"
+		    android:layout_gravity="center_horizontal">
+		    
+		    <LinearLayout 
+		    android:layout_width="0dp"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"></LinearLayout>
+		    
+		    <Button 
+		    android:id="@+id/activity_board_button_1"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:theme="@style/TicTacToeBoardButtonStyle"/>
+		    
+		    <Button 
+		    android:id="@+id/activity_board_button_2"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:theme="@style/TicTacToeBoardButtonStyle"/>
+		    
+		    <Button 
+		    android:id="@+id/activity_board_button_3"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:theme="@style/TicTacToeBoardButtonStyle"/>
+		    
+		    <LinearLayout 
+		    android:layout_width="0dp"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"></LinearLayout>
+		    
+		</LinearLayout>
+		
+		<LinearLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal"
+		    android:layout_gravity="center_horizontal">
+		    
+		    <LinearLayout 
+		    android:layout_width="0dp"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"></LinearLayout>
+		    
+		    <Button 
+		    android:id="@+id/activity_board_button_4"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:theme="@style/TicTacToeBoardButtonStyle"/>
+		    
+		    <Button 
+		    android:id="@+id/activity_board_button_5"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:theme="@style/TicTacToeBoardButtonStyle"/>
+		    
+		    <Button 
+		    android:id="@+id/activity_board_button_6"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:theme="@style/TicTacToeBoardButtonStyle"/>
+		    
+		    <LinearLayout 
+		    android:layout_width="0dp"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"></LinearLayout>
+		    
+		</LinearLayout>
+		
+		<LinearLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal"
+		    android:layout_gravity="center_horizontal">
+		    
+		    <LinearLayout 
+		    android:layout_width="0dp"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"></LinearLayout>
+		    
+		    <Button 
+		    android:id="@+id/activity_board_button_7"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:theme="@style/TicTacToeBoardButtonStyle"/>
+		    
+		    <Button 
+		    android:id="@+id/activity_board_button_8"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:theme="@style/TicTacToeBoardButtonStyle"/>
+		    
+		    <Button 
+		    android:id="@+id/activity_board_button_9"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:theme="@style/TicTacToeBoardButtonStyle"/>
+		    
+		    <LinearLayout 
+		    android:layout_width="0dp"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"></LinearLayout>
+		    
+		</LinearLayout>
 		
 		<LinearLayout 
 		    android:layout_width="match_parent"
 		    android:layout_height="0dp"
 		    android:layout_weight="1"></LinearLayout>
 		
-		<TextView 
-		    android:id="@+id/activity_board_textview_x_player_desc"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:text="@string/activity_main_player_X_enter_name"
-		    android:theme="@style/TicTacToeTextViewSmallStyle"/>
-		
-		<EditText 
-		    android:id="@+id/activity_board_edittext_x_player"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:hint="@string/activity_main_player_X_hint_name"
-		    android:theme="@style/TicTacToeEditTextStyle"
-		    android:layout_marginBottom="@dimen/editTextMarginBottom"/>
-		
-		<TextView 
-		    android:id="@+id/activity_board_textview_o_player_desc"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:text="@string/activity_main_player_O_enter_name"
-		    android:theme="@style/TicTacToeTextViewSmallStyle"/>
-		
-		<EditText 
-		    android:id="@+id/activity_board_edittext_o_player"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:hint="@string/activity_main_player_O_hint_name"
-		    android:theme="@style/TicTacToeEditTextStyle"
-		    android:layout_marginBottom="@dimen/editTextMarginBottom"/>
-		
 		<Button 
-		    android:id="@+id/activity_board_button_start_game"
+		    android:id="@+id/activity_board_button_end_match"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
-		    android:text="@string/activity_main_button_text"
+		    android:text="@string/activity_board_button_text"
 		    android:theme="@style/TicTacToeButtonStyle"/>
         
     </LinearLayout>

@@ -1,6 +1,8 @@
 package com.markopetrovic.simpletictactoe.models;
 
-public class Player
+import java.io.Serializable;
+
+public class Player implements Serializable
 {
 	//this is a model class of our player
 	//player has name and total score
@@ -10,6 +12,7 @@ public class Player
 		return new Player(name, matchesWon, matchesLost);
 	}
 
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private int matchesWon;
 	private int matchesLost;
