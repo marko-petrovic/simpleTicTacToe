@@ -15,6 +15,7 @@ import android.view.WindowManager;
 
 import com.markopetrovic.simpletictactoe.R;
 import com.markopetrovic.simpletictactoe.activities.ScoreBoardTableActivity;
+import com.markopetrovic.simpletictactoe.managers.GameResultResolver.Piece;
 import com.markopetrovic.simpletictactoe.models.BoardOpponents;
 import com.markopetrovic.simpletictactoe.models.BoardPlayer;
 import com.markopetrovic.simpletictactoe.models.Player;
@@ -35,6 +36,7 @@ public class TicTacToeManager extends Application
     public static Scoreboard scoreboardPlayers;
     public static BoardOpponents boardOponents;
     private static int indexX, indexO;
+    public static Piece[][] board;
 	
 	private static TicTacToeManager sInstance;
 	
@@ -276,6 +278,10 @@ public class TicTacToeManager extends Application
 			indexX = -1;
 			indexO = -1;
 		}
+		
+		//now board opponents are created and we only have to init empty board and that's 
+		//what's needed for a game to start
+		initBoard();
 	}
 	
 	//this is maybe not too necessary in our simple demo app case, but if we want to pass arguments for intent.putExtra
@@ -342,5 +348,41 @@ public class TicTacToeManager extends Application
 	public static String getStringValue(int resId)
 	{
 		return sInstance.getApplicationContext().getResources().getString(resId);
+	}
+
+	public static void updateBoard(int id) 
+	{
+		if (id == R.id.activity_board_button_1) 
+		{
+			if (boardOponents.getxPlays().booleanValue())
+			{
+				board[0][0] = Piece.XWINS;
+				boardOponents.setxPlays(false);
+			}
+			else
+			{
+				board[0][0] = Piece.OWINS;
+				boardOponents.setxPlays(true);
+			}
+			//TODO
+		}
+		
+		//TODO
+		GameResultResolver.hasWon(board);
+	}
+	
+	//primitive initialization of an empty board
+	public static void initBoard()
+	{
+		board = null;
+		board = new Piece[3][3];
+		
+		for (int i = 0; i < 3; i++) 
+		{
+			for (int j = 0; j < 3; j++) 
+			{
+				board[i][j] = Piece.DRAW;
+			}
+		}
 	}
 }

@@ -115,7 +115,6 @@ public class BoardActivity extends BaseActivity implements OnClickListener
 			//to correspond with this move. Then set xPlays to ! value of a current value
 			buttonForBoard.setText("X");
 			buttonForBoard.setTextColor(TicTacToeManager.getInstance().getResources().getColor(R.color.blue));
-			TicTacToeManager.boardOponents.setxPlays(false);
 		}
 		else
 		{
@@ -123,7 +122,6 @@ public class BoardActivity extends BaseActivity implements OnClickListener
 			//so next button will know that X player played
 			buttonForBoard.setText("O");
 			buttonForBoard.setTextColor(TicTacToeManager.getInstance().getResources().getColor(R.color.red));
-			TicTacToeManager.boardOponents.setxPlays(true);
 		}
 		
 		lockButton(id);
@@ -159,6 +157,9 @@ public class BoardActivity extends BaseActivity implements OnClickListener
 		{
 			//must be any of board buttons
 			updateButton(v.getId());
+			
+			//check if we have game result
+			TicTacToeManager.updateBoard(v.getId());
 		}
 	}
 }
