@@ -17,15 +17,15 @@ public class BoardActivity extends BaseActivity implements OnClickListener
 	
 	private TextView descriptionText;
 	private Button endMatchButton;
-//	private Button boardButton1, boardButton2, boardButton3;
-//	private Button boardButton4, boardButton5, boardButton6;
-//	private Button boardButton7, boardButton8, boardButton9;
 	private final int[] boardButtonIds = 
 	{
 		R.id.activity_board_button_1, R.id.activity_board_button_2, R.id.activity_board_button_3,
 		R.id.activity_board_button_4, R.id.activity_board_button_5, R.id.activity_board_button_6,
 		R.id.activity_board_button_7, R.id.activity_board_button_8, R.id.activity_board_button_9
 	};
+	private Button buttonToUnlock;
+	private Button buttonToLock;
+	private Button buttonForBoard;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState)
@@ -33,6 +33,7 @@ public class BoardActivity extends BaseActivity implements OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
         
+        //set all UI components to be ready to start match and games
         setUIstuff();
          
         System.out.println
@@ -57,17 +58,6 @@ public class BoardActivity extends BaseActivity implements OnClickListener
     	endMatchButton.setOnClickListener(this);
     	
     	//board buttons
-//    	boardButton1 = (Button)findViewById(R.id.activity_board_button_1);
-//    	boardButton2 = (Button)findViewById(R.id.activity_board_button_2);
-//    	boardButton3 = (Button)findViewById(R.id.activity_board_button_3);
-//    	boardButton4 = (Button)findViewById(R.id.activity_board_button_4);
-//    	boardButton5 = (Button)findViewById(R.id.activity_board_button_5);
-//    	boardButton6 = (Button)findViewById(R.id.activity_board_button_6);
-//    	boardButton7 = (Button)findViewById(R.id.activity_board_button_7);
-//    	boardButton8 = (Button)findViewById(R.id.activity_board_button_8);
-//    	boardButton9 = (Button)findViewById(R.id.activity_board_button_9);
-    	Button buttonForBoard;
-    	
     	LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(TicTacToeManager.deviceScreenWidth/4, TicTacToeManager.deviceScreenWidth/4);
     	
     	for (int i = 0; i < boardButtonIds.length; i++) 
@@ -78,55 +68,65 @@ public class BoardActivity extends BaseActivity implements OnClickListener
 			buttonForBoard.setOnClickListener(this);
 		}
     	
-//    	boardButton1.setLayoutParams(buttonParams);
-//    	boardButton2.setLayoutParams(buttonParams);
-//    	boardButton3.setLayoutParams(buttonParams);
-//    	boardButton4.setLayoutParams(buttonParams);
-//    	boardButton5.setLayoutParams(buttonParams);
-//    	boardButton6.setLayoutParams(buttonParams);
-//    	boardButton7.setLayoutParams(buttonParams);
-//    	boardButton8.setLayoutParams(buttonParams);
-//    	boardButton9.setLayoutParams(buttonParams);
-//    	
-//    	boardButton1.setTypeface(defaultFont);
-//    	boardButton2.setTypeface(defaultFont);
-//    	boardButton3.setTypeface(defaultFont);
-//    	boardButton4.setTypeface(defaultFont);
-//    	boardButton5.setTypeface(defaultFont);
-//    	boardButton6.setTypeface(defaultFont);
-//    	boardButton7.setTypeface(defaultFont);
-//    	boardButton8.setTypeface(defaultFont);
-//    	boardButton9.setTypeface(defaultFont);
-//    	
-//    	boardButton1.setOnClickListener(this);
-//    	boardButton2.setOnClickListener(this);
-//    	boardButton3.setOnClickListener(this);
-//    	boardButton4.setOnClickListener(this);
-//    	boardButton5.setOnClickListener(this);
-//    	boardButton6.setOnClickListener(this);
-//    	boardButton7.setOnClickListener(this);
-//    	boardButton8.setOnClickListener(this);
-//    	boardButton9.setOnClickListener(this);
+    	//now just unlock all buttons and set their text to ""
+    	//not really necessary to do but do it anyway, costs next to nothing
+    	unlockOrLockAllButtons(false);
 	}
 	
 	//after button was clicked on, make it disabled for more clicks
-	private void lockButton(Button buttonToLockAfterBeingUsed)
+	private void lockButton(int id)
 	{
-		buttonToLockAfterBeingUsed.setEnabled(false);
+		buttonToLock = (Button)findViewById(id);
+		buttonToLock.setEnabled(false);
 	}
 	
 	//unlock all buttons (make them enabled) after new game start
-	//also remove their texts 
-	private void unlockAllButtons()
+	//also remove their texts
+	//or lock them all and do not remove texts (case when we have a game result)
+	private void unlockOrLockAllButtons(boolean lockThemAll)
 	{
-		Button buttonToUnlock;
-    	
-    	for (int i = 0; i < boardButtonIds.length; i++) 
-    	{
-    		buttonToUnlock = (Button)findViewById(boardButtonIds[i]);
-    		buttonToUnlock.setEnabled(true);
-    		buttonToUnlock.setText("");
+		if (lockThemAll) 
+		{
+			for (int i = 0; i < boardButtonIds.length; i++) 
+	    	{
+	    		buttonToUnlock = (Button)findViewById(boardButtonIds[i]);
+	    		buttonToUnlock.setEnabled(false);
+			}
 		}
+		else
+		{
+			for (int i = 0; i < boardButtonIds.length; i++) 
+	    	{
+	    		buttonToUnlock = (Button)findViewById(boardButtonIds[i]);
+	    		buttonToUnlock.setEnabled(true);
+	    		buttonToUnlock.setText("");
+			}
+		}
+	}
+	
+	//set button value (player's move)
+	private void updateButton(int id)
+	{
+		buttonForBoard = (Button)findViewById(id);
+		
+		if (TicTacToeManager.boardOponents.getxPlays()) 
+		{
+			//it means that X has played, therefore set Button text to "X" and set other values
+			//to correspond with this move. Then set xPlays to ! value of a current value
+			buttonForBoard.setText("X");
+			buttonForBoard.setTextColor(TicTacToeManager.getInstance().getResources().getColor(R.color.blue));
+			TicTacToeManager.boardOponents.setxPlays(false);
+		}
+		else
+		{
+			//this means that O player just played. Set text to "O" and set xPlays to true
+			//so next button will know that X player played
+			buttonForBoard.setText("O");
+			buttonForBoard.setTextColor(TicTacToeManager.getInstance().getResources().getColor(R.color.red));
+			TicTacToeManager.boardOponents.setxPlays(true);
+		}
+		
+		lockButton(id);
 	}
 	
 	@Override
@@ -143,55 +143,22 @@ public class BoardActivity extends BaseActivity implements OnClickListener
 	@Override
 	public void onClick(View v) 
 	{
-		switch(v.getId()) 
+		if (v.getId() == R.id.activity_board_button_end_match) 
 		{
-	        case R.id.activity_board_button_1:
-	        	
-	    	break;
-	    	
-	        case R.id.activity_board_button_2:
-	        	
-	        break;
-	        
-	        case R.id.activity_board_button_3:
-	     
-	    	break;
-	    	
-	        case R.id.activity_board_button_4:
-	        	
-	        break;
-		        
-	        case R.id.activity_board_button_5:
-		        	
-	    	break;
-	    	
-	        case R.id.activity_board_button_6:
-	        	
-	        break;
-	        
-	        case R.id.activity_board_button_7:
-			        	
-	    	break;
-	    	
-	        case R.id.activity_board_button_8:
-	        	
-	        break;
-	        
-	        case R.id.activity_board_button_9:
-	        	
-	        break;
-	        
-	        case R.id.activity_board_button_end_match:
-	        	//just for testing
-				TicTacToeManager.boardOponents.getxPlayer().setCurrentWins(5);
-				TicTacToeManager.boardOponents.getxPlayer().setCurrentLoses(2);
-				TicTacToeManager.boardOponents.getoPlayer().setCurrentWins(2);
-				TicTacToeManager.boardOponents.getoPlayer().setCurrentLoses(5);
-				
-				TicTacToeManager.recordResultsFromThisMatch((Activity) context);
-				
-				finish();
-	        break;
+			//just for testing
+			TicTacToeManager.boardOponents.getxPlayer().setCurrentWins(5);
+			TicTacToeManager.boardOponents.getxPlayer().setCurrentLoses(2);
+			TicTacToeManager.boardOponents.getoPlayer().setCurrentWins(2);
+			TicTacToeManager.boardOponents.getoPlayer().setCurrentLoses(5);
+			
+			TicTacToeManager.recordResultsFromThisMatch((Activity) context);
+			
+			finish();
+		}
+		else
+		{
+			//must be any of board buttons
+			updateButton(v.getId());
 		}
 	}
 }
