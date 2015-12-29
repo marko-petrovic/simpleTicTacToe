@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.markopetrovic.simpletictactoe.R;
+import com.markopetrovic.simpletictactoe.managers.GameResultResolver.StateEnum;
 import com.markopetrovic.simpletictactoe.managers.TicTacToeManager;
 
 public class BoardActivity extends BaseActivity implements OnClickListener 
@@ -143,12 +144,6 @@ public class BoardActivity extends BaseActivity implements OnClickListener
 	{
 		if (v.getId() == R.id.activity_board_button_end_match) 
 		{
-			//just for testing
-			TicTacToeManager.boardOponents.getxPlayer().setCurrentWins(5);
-			TicTacToeManager.boardOponents.getxPlayer().setCurrentLoses(2);
-			TicTacToeManager.boardOponents.getoPlayer().setCurrentWins(2);
-			TicTacToeManager.boardOponents.getoPlayer().setCurrentLoses(5);
-			
 			TicTacToeManager.recordResultsFromThisMatch((Activity) context);
 			
 			finish();
@@ -159,7 +154,28 @@ public class BoardActivity extends BaseActivity implements OnClickListener
 			updateButton(v.getId());
 			
 			//check if we have game result
-			TicTacToeManager.updateBoard(v.getId());
+			StateEnum gameResult = TicTacToeManager.updateBoard(v.getId());
+			
+			if (TicTacToeManager.boardOponents.getxPlays() == null) 
+			{
+				//update UI with data of wins and loses
+				System.out.println("winner is " + gameResult.toString());
+				System.out.println(TicTacToeManager.boardOponents.getxPlayer().getPlayer().getName() + ": wins " + TicTacToeManager.boardOponents.getxPlayer().getCurrentWins()
+						+ ", loses " + TicTacToeManager.boardOponents.getxPlayer().getCurrentLoses());
+				System.out.println(TicTacToeManager.boardOponents.getoPlayer().getPlayer().getName() + ": wins " + TicTacToeManager.boardOponents.getoPlayer().getCurrentWins()
+						+ ", loses " + TicTacToeManager.boardOponents.getoPlayer().getCurrentLoses());
+				//TODO
+				
+				//game resulted and ended, we have to restart it
+				unlockOrLockAllButtons(false);
+				
+				TicTacToeManager.boardOponents.setxPlays(true);
+				TicTacToeManager.boardOponents.setCounter(0);
+				TicTacToeManager.initBoard();
+				
+				//TODO
+				//show some button for restart?
+			}
 		}
 	}
 }

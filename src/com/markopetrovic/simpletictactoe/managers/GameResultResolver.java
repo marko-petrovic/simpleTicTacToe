@@ -5,7 +5,7 @@ public class GameResultResolver
 	// we will use this class' methods to resolve if there was game result
 	// result can be DRAW, XWINS, OWINS
 
-	public enum Piece 
+	public enum StateEnum 
 	{
 		DRAW, XWINS, OWINS
 	};
@@ -15,7 +15,7 @@ public class GameResultResolver
 		Row, Column, Diagonal, ReverseDiagonal
 	}
 
-	static Piece getIthColor(Piece[][] board, int index, int var, Check check) 
+	static StateEnum getIthColor(StateEnum[][] board, int index, int var, Check check) 
 	{
 		if (check == Check.Row)
 		{
@@ -34,48 +34,48 @@ public class GameResultResolver
 			return board[board.length - 1 - var][var];
 		}
 
-		return Piece.DRAW;
+		return StateEnum.DRAW;
 	}
 
-	static Piece getWinner(Piece[][] board, int fixed_index, Check check)
+	static StateEnum getWinner(StateEnum[][] board, int fixed_index, Check check)
 	{
-		Piece color = getIthColor(board, fixed_index, 0, check);
+		StateEnum color = getIthColor(board, fixed_index, 0, check);
 
-		if (color == Piece.DRAW)
+		if (color == StateEnum.DRAW)
 		{
-			return Piece.DRAW;
+			return StateEnum.DRAW;
 		}
 
 		for (int var = 1; var < board.length; var++) 
 		{
 			if (color != getIthColor(board, fixed_index, var, check))
 			{
-				return Piece.DRAW;
+				return StateEnum.DRAW;
 			}
 		}
 
 		return color;
 	}
 
-	public static Piece hasWon(Piece[][] board)
+	public static StateEnum checkForGameResult(StateEnum[][] board)
 	{
 		int N = board.length;
 
-		Piece winner = Piece.DRAW;
+		StateEnum winner = StateEnum.DRAW;
 
 		// Check rows and columns
 		for (int i = 0; i < N; i++) 
 		{
 			winner = getWinner(board, i, Check.Row);
 
-			if (winner != Piece.DRAW)
+			if (winner != StateEnum.DRAW)
 			{
 				return winner;
 			}
 
 			winner = getWinner(board, i, Check.Column);
 
-			if (winner != Piece.DRAW)
+			if (winner != StateEnum.DRAW)
 			{
 				return winner;
 			}
@@ -83,7 +83,7 @@ public class GameResultResolver
 
 		winner = getWinner(board, -1, Check.Diagonal);
 
-		if (winner != Piece.DRAW)
+		if (winner != StateEnum.DRAW)
 		{
 			return winner;
 		}
@@ -91,11 +91,11 @@ public class GameResultResolver
 		// Check diagonal
 		winner = getWinner(board, -1, Check.ReverseDiagonal);
 
-		if (winner != Piece.DRAW)
+		if (winner != StateEnum.DRAW)
 		{
 			return winner;
 		}
 
-		return Piece.DRAW;
+		return StateEnum.DRAW;
 	}
 }

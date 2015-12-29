@@ -15,7 +15,7 @@ import android.view.WindowManager;
 
 import com.markopetrovic.simpletictactoe.R;
 import com.markopetrovic.simpletictactoe.activities.ScoreBoardTableActivity;
-import com.markopetrovic.simpletictactoe.managers.GameResultResolver.Piece;
+import com.markopetrovic.simpletictactoe.managers.GameResultResolver.StateEnum;
 import com.markopetrovic.simpletictactoe.models.BoardOpponents;
 import com.markopetrovic.simpletictactoe.models.BoardPlayer;
 import com.markopetrovic.simpletictactoe.models.Player;
@@ -36,7 +36,7 @@ public class TicTacToeManager extends Application
     public static Scoreboard scoreboardPlayers;
     public static BoardOpponents boardOponents;
     private static int indexX, indexO;
-    public static Piece[][] board;
+    public static StateEnum[][] board;
 	
 	private static TicTacToeManager sInstance;
 	
@@ -350,38 +350,111 @@ public class TicTacToeManager extends Application
 		return sInstance.getApplicationContext().getResources().getString(resId);
 	}
 
-	public static void updateBoard(int id) 
+	public static StateEnum updateBoard(int id) 
 	{
-		if (id == R.id.activity_board_button_1) 
+		//positions in board
+		int m = 0;
+		int n = 0;
+		
+		//depending on which button was clicked we will map m and n
+		switch (id) 
 		{
-			if (boardOponents.getxPlays().booleanValue())
-			{
-				board[0][0] = Piece.XWINS;
-				boardOponents.setxPlays(false);
-			}
-			else
-			{
-				board[0][0] = Piece.OWINS;
-				boardOponents.setxPlays(true);
-			}
-			//TODO
+			case R.id.activity_board_button_1:
+				m = 0;
+				n = 0;
+				break;
+
+			case R.id.activity_board_button_2:
+				m = 0;
+				n = 1;
+				break;
+				
+			case R.id.activity_board_button_3:
+				m = 0;
+				n = 2;
+				break;
+				
+			case R.id.activity_board_button_4:
+				m = 1;
+				n = 0;
+				break;
+				
+			case R.id.activity_board_button_5:
+				m = 1;
+				n = 1;
+				break;
+				
+			case R.id.activity_board_button_6:
+				m = 1;
+				n = 2;
+				break;
+				
+			case R.id.activity_board_button_7:
+				m = 2;
+				n = 0;
+				break;
+				
+			case R.id.activity_board_button_8:
+				m = 2;
+				n = 1;
+				break;
+				
+			case R.id.activity_board_button_9:
+				m = 2;
+				n = 2;
+				break;
 		}
 		
-		//TODO
-		GameResultResolver.hasWon(board);
+		//now see who played and set board values accordingly
+		if (boardOponents.getxPlays().booleanValue())
+		{
+			board[m][n] = StateEnum.XWINS;
+			boardOponents.setxPlays(false);
+		}
+		else
+		{
+			board[m][n] = StateEnum.OWINS;
+			boardOponents.setxPlays(true);
+		}
+		
+		//button was clicked, so increase counter
+		boardOponents.setCounter(boardOponents.getCounter() + 1);
+		
+		//check if we have game result
+		StateEnum gameResult = GameResultResolver.checkForGameResult(board);
+		
+		if (gameResult != StateEnum.DRAW || boardOponents.getCounter() == 9) 
+		{
+			//we have a result, so lets use null for xPlays Boolean as third state
+			//we will check for this state in BoardActivity
+			boardOponents.setxPlays(null);
+			
+			if (gameResult == StateEnum.XWINS) 
+			{
+				boardOponents.getxPlayer().setCurrentWins(boardOponents.getxPlayer().getCurrentWins() + 1);
+				boardOponents.getoPlayer().setCurrentLoses(boardOponents.getoPlayer().getCurrentLoses() + 1);
+			}
+			else if (gameResult == StateEnum.OWINS) 
+			{
+				boardOponents.getxPlayer().setCurrentLoses(boardOponents.getxPlayer().getCurrentLoses() + 1);
+				boardOponents.getoPlayer().setCurrentWins(boardOponents.getoPlayer().getCurrentWins() + 1);
+			}
+		}
+		
+		return gameResult;
 	}
 	
 	//primitive initialization of an empty board
 	public static void initBoard()
 	{
 		board = null;
-		board = new Piece[3][3];
+		board = new StateEnum[3][3];
 		
 		for (int i = 0; i < 3; i++) 
 		{
 			for (int j = 0; j < 3; j++) 
 			{
-				board[i][j] = Piece.DRAW;
+				board[i][j] = StateEnum.DRAW;
 			}
 		}
 	}

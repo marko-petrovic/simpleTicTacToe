@@ -17,6 +17,7 @@ public class BoardOpponents
 	//construct a value for this property if we assume that X plays first (it's demo app after all)
 	//Boolean is used instead of boolean because we might want to use third state too (true, false and null)
 	private Boolean xPlays = true;
+	private int counter = 0;
 	
 	private BoardOpponents(BoardPlayer xPlayer, BoardPlayer oPlayer)
 	{
@@ -24,6 +25,7 @@ public class BoardOpponents
 		this.xPlayer = xPlayer;
 		this.oPlayer = oPlayer;
 		this.xPlays = true;
+		this.counter = 0;
 	}
 	
 	public BoardPlayer getxPlayer() 
@@ -54,6 +56,14 @@ public class BoardOpponents
 	public void setxPlays(Boolean xPlays)
 	{
 		this.xPlays = xPlays;
+	}
+
+	public int getCounter() {
+		return counter;
+	}
+
+	public void setCounter(int counter) {
+		this.counter = counter;
 	}
 
 }
