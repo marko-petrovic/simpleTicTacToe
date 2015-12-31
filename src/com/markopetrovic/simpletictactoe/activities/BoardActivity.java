@@ -202,6 +202,8 @@ public class BoardActivity extends BaseActivity implements OnClickListener
 			
 			if (TicTacToeManager.boardOponents.getxPlays() == null) 
 			{
+				unlockOrLockAllButtons(true);
+				
 				//update UI with data of wins and loses
 				System.out.println("winner is " + gameResult.toString());
 				System.out.println(TicTacToeManager.boardOponents.getxPlayer().getPlayer().getName() + ": wins " + TicTacToeManager.boardOponents.getxPlayer().getCurrentWins()
