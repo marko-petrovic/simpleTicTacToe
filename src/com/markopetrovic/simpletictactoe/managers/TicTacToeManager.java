@@ -148,11 +148,11 @@ public class TicTacToeManager extends Application
 		if (indexX != -1) 
 		{
 			//just update player at this index
-			scoreboardPlayers.getScoreBoardPlayers().get(indexX).setMatchesWon
-			(boardOponents.getxPlayer().getCurrentWins() + boardOponents.getxPlayer().getPlayer().getMatchesWon());
+			scoreboardPlayers.getScoreBoardPlayers().get(indexX).setTotalGamesWon
+			(boardOponents.getxPlayer().getCurrentWins() + boardOponents.getxPlayer().getPlayer().getTotalGamesWon());
 			
-			scoreboardPlayers.getScoreBoardPlayers().get(indexX).setMatchesLost
-			(boardOponents.getxPlayer().getCurrentLoses() + boardOponents.getxPlayer().getPlayer().getMatchesLost());
+			scoreboardPlayers.getScoreBoardPlayers().get(indexX).setTotalGamesLost
+			(boardOponents.getxPlayer().getCurrentLoses() + boardOponents.getxPlayer().getPlayer().getTotalGamesLost());
 		}
 		else
 		{
@@ -170,11 +170,11 @@ public class TicTacToeManager extends Application
 		if (indexO != -1) 
 		{
 			//just update player at this index
-			scoreboardPlayers.getScoreBoardPlayers().get(indexO).setMatchesWon
-			(boardOponents.getoPlayer().getCurrentWins() + boardOponents.getoPlayer().getPlayer().getMatchesWon());
+			scoreboardPlayers.getScoreBoardPlayers().get(indexO).setTotalGamesWon
+			(boardOponents.getoPlayer().getCurrentWins() + boardOponents.getoPlayer().getPlayer().getTotalGamesWon());
 			
-			scoreboardPlayers.getScoreBoardPlayers().get(indexO).setMatchesLost
-			(boardOponents.getoPlayer().getCurrentLoses() + boardOponents.getoPlayer().getPlayer().getMatchesLost());
+			scoreboardPlayers.getScoreBoardPlayers().get(indexO).setTotalGamesLost
+			(boardOponents.getoPlayer().getCurrentLoses() + boardOponents.getoPlayer().getPlayer().getTotalGamesLost());
 		}
 		else
 		{
@@ -213,8 +213,8 @@ public class TicTacToeManager extends Application
 					xPlayerObj = Player.createPlayer
 					(
 						scoreboardPlayers.getScoreBoardPlayers().get(i).getName(),
-						scoreboardPlayers.getScoreBoardPlayers().get(i).getMatchesWon(),
-						scoreboardPlayers.getScoreBoardPlayers().get(i).getMatchesLost()
+						scoreboardPlayers.getScoreBoardPlayers().get(i).getTotalGamesWon(),
+						scoreboardPlayers.getScoreBoardPlayers().get(i).getTotalGamesLost()
 					);
 					xFound = true;
 					indexX = i;
@@ -225,8 +225,8 @@ public class TicTacToeManager extends Application
 					oPlayerObj = Player.createPlayer
 					(
 						scoreboardPlayers.getScoreBoardPlayers().get(i).getName(),
-						scoreboardPlayers.getScoreBoardPlayers().get(i).getMatchesWon(),
-						scoreboardPlayers.getScoreBoardPlayers().get(i).getMatchesLost()
+						scoreboardPlayers.getScoreBoardPlayers().get(i).getTotalGamesWon(),
+						scoreboardPlayers.getScoreBoardPlayers().get(i).getTotalGamesLost()
 					);
 					oFound = true;
 					indexO = i;

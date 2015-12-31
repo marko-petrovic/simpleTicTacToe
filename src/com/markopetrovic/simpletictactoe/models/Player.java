@@ -14,15 +14,15 @@ public class Player implements Serializable
 
 	private static final long serialVersionUID = 1L;
 	private String name;
-	private int matchesWon;
-	private int matchesLost;
+	private int totalGamesWon;
+	private int totalGamesLost;
 	
 	private Player(String name, int matchesWon, int matchesLost)
 	{
 		super();
 		this.name = name;
-		this.matchesWon = matchesWon;
-		this.matchesLost = matchesLost;
+		this.totalGamesWon = matchesWon;
+		this.totalGamesLost = matchesLost;
 	}
 	
 	public String getName()
@@ -35,23 +35,23 @@ public class Player implements Serializable
 		this.name = name;
 	}
 	
-	public int getMatchesWon()
+	public int getTotalGamesWon()
 	{
-		return matchesWon;
+		return totalGamesWon;
 	}
 	
-	public void setMatchesWon(int matchesWon)
+	public void setTotalGamesWon(int matchesWon)
 	{
-		this.matchesWon = matchesWon;
+		this.totalGamesWon = matchesWon;
 	}
 	
-	public int getMatchesLost() 
+	public int getTotalGamesLost() 
 	{
-		return matchesLost;
+		return totalGamesLost;
 	}
 	
-	public void setMatchesLost(int matchesLost)
+	public void setTotalGamesLost(int matchesLost)
 	{
-		this.matchesLost = matchesLost;
+		this.totalGamesLost = matchesLost;
 	}
 }

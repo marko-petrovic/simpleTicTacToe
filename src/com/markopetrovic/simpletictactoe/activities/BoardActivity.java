@@ -64,8 +64,8 @@ public class BoardActivity extends BaseActivity implements OnClickListener
     	xPlayerPreviousLoses.setTypeface(defaultFont);
     	xPlayerName.setText(TicTacToeManager.boardOponents.getxPlayer().getPlayer().getName());
     	xPlayerCurrentWins.setText(String.valueOf(TicTacToeManager.boardOponents.getxPlayer().getCurrentWins()));
-    	xPlayerPreviousWins.setText(String.valueOf(TicTacToeManager.boardOponents.getxPlayer().getPlayer().getMatchesWon()));
-    	xPlayerPreviousLoses.setText(String.valueOf(TicTacToeManager.boardOponents.getxPlayer().getPlayer().getMatchesLost()));
+    	xPlayerPreviousWins.setText(String.valueOf(TicTacToeManager.boardOponents.getxPlayer().getPlayer().getTotalGamesWon()));
+    	xPlayerPreviousLoses.setText(String.valueOf(TicTacToeManager.boardOponents.getxPlayer().getPlayer().getTotalGamesLost()));
     	
     	//oPlayer name and scores values
     	oPlayerName = (TextView)findViewById(R.id.activity_board_textview_oplayer_name);
@@ -78,8 +78,8 @@ public class BoardActivity extends BaseActivity implements OnClickListener
     	oPlayerPreviousLoses.setTypeface(defaultFont);
     	oPlayerName.setText(TicTacToeManager.boardOponents.getoPlayer().getPlayer().getName());
     	oPlayerCurrentWins.setText(String.valueOf(TicTacToeManager.boardOponents.getoPlayer().getCurrentWins()));
-    	oPlayerPreviousWins.setText(String.valueOf(TicTacToeManager.boardOponents.getoPlayer().getPlayer().getMatchesWon()));
-    	oPlayerPreviousLoses.setText(String.valueOf(TicTacToeManager.boardOponents.getoPlayer().getPlayer().getMatchesLost()));
+    	oPlayerPreviousWins.setText(String.valueOf(TicTacToeManager.boardOponents.getoPlayer().getPlayer().getTotalGamesWon()));
+    	oPlayerPreviousLoses.setText(String.valueOf(TicTacToeManager.boardOponents.getoPlayer().getPlayer().getTotalGamesLost()));
     	
     	//play again button
     	playAgainButton = (Button)findViewById(R.id.activity_board_button_play_next_game);
@@ -192,18 +192,20 @@ public class BoardActivity extends BaseActivity implements OnClickListener
 			//users want to play another game so reset everything and let them play
 			unlockOrLockAllButtons(false);
 			
-			
+			//tell who's playing first
 			if (TicTacToeManager.boardOponents.isPreviousPlayerWasX()) 
 			{
 				TicTacToeManager.boardOponents.setxPlays(true);
 				descriptionText.setText(TicTacToeManager.boardOponents.getxPlayer().getPlayer().getName() +
 						TicTacToeManager.getStringValue(R.string.activity_board_has_the_first_move));
+				descriptionText.setTextColor(TicTacToeManager.getInstance().getResources().getColor(R.color.blue));
 			}
 			else
 			{
 				TicTacToeManager.boardOponents.setxPlays(false);
 				descriptionText.setText(TicTacToeManager.boardOponents.getoPlayer().getPlayer().getName() +
 						TicTacToeManager.getStringValue(R.string.activity_board_has_the_first_move));
+				descriptionText.setTextColor(TicTacToeManager.getInstance().getResources().getColor(R.color.red));
 			}
 			
 			TicTacToeManager.boardOponents.setCounter(0);
@@ -236,16 +238,16 @@ public class BoardActivity extends BaseActivity implements OnClickListener
 					descriptionText.setText(TicTacToeManager.getStringValue(R.string.activity_board_description_winner_is) + 
 							TicTacToeManager.boardOponents.getxPlayer().getPlayer().getName());
 					xPlayerCurrentWins.setText(String.valueOf(TicTacToeManager.boardOponents.getxPlayer().getCurrentWins()));
-					xPlayerPreviousWins.setText(String.valueOf(TicTacToeManager.boardOponents.getxPlayer().getCurrentWins() + TicTacToeManager.boardOponents.getxPlayer().getPlayer().getMatchesWon()));
-					oPlayerPreviousLoses.setText(String.valueOf(TicTacToeManager.boardOponents.getoPlayer().getCurrentLoses() + TicTacToeManager.boardOponents.getoPlayer().getPlayer().getMatchesLost()));
+					xPlayerPreviousWins.setText(String.valueOf(TicTacToeManager.boardOponents.getxPlayer().getCurrentWins() + TicTacToeManager.boardOponents.getxPlayer().getPlayer().getTotalGamesWon()));
+					oPlayerPreviousLoses.setText(String.valueOf(TicTacToeManager.boardOponents.getoPlayer().getCurrentLoses() + TicTacToeManager.boardOponents.getoPlayer().getPlayer().getTotalGamesLost()));
 				}
 				else
 				{
 					descriptionText.setText(TicTacToeManager.getStringValue(R.string.activity_board_description_winner_is) + 
 							TicTacToeManager.boardOponents.getoPlayer().getPlayer().getName());
 					oPlayerCurrentWins.setText(String.valueOf(TicTacToeManager.boardOponents.getoPlayer().getCurrentWins()));
-					oPlayerPreviousWins.setText(String.valueOf(TicTacToeManager.boardOponents.getoPlayer().getCurrentWins() + TicTacToeManager.boardOponents.getoPlayer().getPlayer().getMatchesWon()));
-					xPlayerPreviousLoses.setText(String.valueOf(TicTacToeManager.boardOponents.getxPlayer().getCurrentLoses() + TicTacToeManager.boardOponents.getxPlayer().getPlayer().getMatchesLost()));
+					oPlayerPreviousWins.setText(String.valueOf(TicTacToeManager.boardOponents.getoPlayer().getCurrentWins() + TicTacToeManager.boardOponents.getoPlayer().getPlayer().getTotalGamesWon()));
+					xPlayerPreviousLoses.setText(String.valueOf(TicTacToeManager.boardOponents.getxPlayer().getCurrentLoses() + TicTacToeManager.boardOponents.getxPlayer().getPlayer().getTotalGamesLost()));
 				}
 				
 				//game resulted and ended, we have to restart it, but users will do that by pressing
