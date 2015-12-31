@@ -22,5 +22,8 @@
     <string name="activity_board_total_scores">total scores:\u0020</string>
     <string name="activity_board_has_the_first_move">\u0020plays first</string>
     
+    <string name="activity_scoreboard_first_tab_label">WINNERS</string>
+    <string name="activity_scoreboard_second_tab_label">LOSERS</string>
+    
     
 </resources>
