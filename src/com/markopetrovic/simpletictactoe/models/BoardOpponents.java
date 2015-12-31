@@ -2,7 +2,7 @@ package com.markopetrovic.simpletictactoe.models;
 
 public class BoardOpponents 
 {
-	//this is a model container class of the two board players
+	//this is a model container class of the two board players, who plays and counting moves
 	
 	public static BoardOpponents createBoardOpponents(BoardPlayer xPlayer, BoardPlayer oPlayer) 
 	{
@@ -17,6 +17,7 @@ public class BoardOpponents
 	//construct a value for this property if we assume that X plays first (it's demo app after all)
 	//Boolean is used instead of boolean because we might want to use third state too (true, false and null)
 	private Boolean xPlays = true;
+	//we need counter so if counter gets == n^2 we stop with playing and decide winner state (DRAW, or x or O)
 	private int counter = 0;
 	
 	private BoardOpponents(BoardPlayer xPlayer, BoardPlayer oPlayer)

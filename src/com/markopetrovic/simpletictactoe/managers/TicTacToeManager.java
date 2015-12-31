@@ -417,15 +417,15 @@ public class TicTacToeManager extends Application
 			boardOponents.setxPlays(true);
 		}
 		
-		//button was clicked, so increase counter
+		//button was clicked, so increase counter for one more move played
 		boardOponents.setCounter(boardOponents.getCounter() + 1);
 		
 		//check if we have game result
 		StateEnum gameResult = GameResultResolver.checkForGameResult(board);
 		
-		if (gameResult != StateEnum.DRAW || boardOponents.getCounter() == 9) 
+		if (gameResult != StateEnum.DRAW || boardOponents.getCounter() == (board.length * board.length)) 
 		{
-			//we have a result, so lets use null for xPlays Boolean as third state
+			//we have a result for X or O player, so lets use null for xPlays Boolean as third state
 			//we will check for this state in BoardActivity
 			boardOponents.setxPlays(null);
 			

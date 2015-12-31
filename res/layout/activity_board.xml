@@ -22,7 +22,7 @@
 		    android:id="@+id/activity_board_textview_board_description"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
-		    android:layout_marginBottom="@dimen/editTextMarginBottom"
+		    android:layout_marginBottom="@dimen/generalMarginBottom"
 		    android:text="@string/activity_board_description"
 		    android:theme="@style/TicTacToeTextViewStyle"/>
 		
@@ -102,7 +102,8 @@
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:orientation="horizontal"
-		    android:layout_gravity="center_horizontal">
+		    android:layout_gravity="center_horizontal"
+		    android:layout_marginBottom="@dimen/generalMarginBottom">
 		    
 		    <LinearLayout 
 		    android:layout_width="0dp"
@@ -135,9 +136,128 @@
 		</LinearLayout>
 		
 		<LinearLayout 
+		    android:id="@+id/activity_board_xplayer_linlayout_container"
+		    android:layout_height="wrap_content"
+		    android:layout_width="match_parent"
+		    android:orientation="vertical"
+		    android:layout_gravity="center_horizontal"
+		    android:layout_marginBottom="@dimen/generalMarginBottom">
+		    
+		    <TextView 
+		    android:id="@+id/activity_board_textview_xplayer_description"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:text="@string/activity_board_xplayer_description"
+		    android:theme="@style/TicTacToeTextViewNameDescriptionsStyle"/>
+		    
+		    <LinearLayout 
+		        android:layout_height="wrap_content"
+		        android:layout_width="match_parent"
+		        android:orientation="horizontal">
+		        
+		    <TextView 
+		    android:id="@+id/activity_board_textview_xplayer_name"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:theme="@style/TicTacToeTextViewStyle"/>   
+		    
+		    <LinearLayout 
+		        android:layout_width="0dp"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"></LinearLayout>
+		    
+		    <TextView 
+		    android:id="@+id/activity_board_textview_xplayer_current_wins"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:theme="@style/TicTacToeTextViewResultsStyle"
+		    android:layout_marginRight="@dimen/currentResultMarginRight"/> 
+		    
+		    <TextView 
+		    android:id="@+id/activity_board_textview_xplayer_prev_wins"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:theme="@style/TicTacToeTextViewStyle"
+		    android:layout_marginRight="@dimen/prevResultMarginRight"/> 
+		    
+		    <TextView 
+		    android:id="@+id/activity_board_textview_xplayer_prev_loses"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:theme="@style/TicTacToeTextViewStyle"/> 
+		        
+		    </LinearLayout>
+		    
+		</LinearLayout>
+		
+		<LinearLayout 
+		    android:id="@+id/activity_board_oplayer_linlayout_container"
+		    android:layout_height="wrap_content"
+		    android:layout_width="match_parent"
+		    android:orientation="vertical"
+		    android:layout_gravity="center_horizontal"
+		    android:layout_marginBottom="@dimen/generalMarginBottom">
+		    
+		    <TextView 
+		    android:id="@+id/activity_board_textview_oplayer_description"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:text="@string/activity_board_oplayer_description"
+		    android:theme="@style/TicTacToeTextViewNameDescriptionsStyle"/>
+		    
+		    <LinearLayout 
+		        android:layout_height="wrap_content"
+		        android:layout_width="match_parent"
+		        android:orientation="horizontal">
+		        
+		    <TextView 
+		    android:id="@+id/activity_board_textview_oplayer_name"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:theme="@style/TicTacToeTextViewStyle"/>   
+		    
+		    <LinearLayout 
+		        android:layout_width="0dp"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"></LinearLayout>
+		    
+		    <TextView 
+		    android:id="@+id/activity_board_textview_oplayer_current_wins"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:theme="@style/TicTacToeTextViewResultsStyle"
+		    android:layout_marginRight="@dimen/currentResultMarginRight"/> 
+		    
+		    <TextView 
+		    android:id="@+id/activity_board_textview_oplayer_prev_wins"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:theme="@style/TicTacToeTextViewStyle"
+		    android:layout_marginRight="@dimen/prevResultMarginRight"/> 
+		    
+		    <TextView 
+		    android:id="@+id/activity_board_textview_oplayer_prev_loses"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:theme="@style/TicTacToeTextViewStyle"/> 
+		        
+		    </LinearLayout>
+		    
+		</LinearLayout>
+		
+		
+		
+		<LinearLayout 
 		    android:layout_width="match_parent"
 		    android:layout_height="0dp"
 		    android:layout_weight="1"></LinearLayout>
+		
+		<Button 
+		    android:id="@+id/activity_board_button_play_next_game"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:text="@string/activity_board_button_next_game"
+		    android:theme="@style/TicTacToeButtonStyle"/>
 		
 		<Button 
 		    android:id="@+id/activity_board_button_end_match"

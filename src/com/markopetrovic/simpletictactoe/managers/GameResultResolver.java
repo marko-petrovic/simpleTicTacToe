@@ -15,7 +15,8 @@ public class GameResultResolver
 		Row, Column, Diagonal, ReverseDiagonal
 	}
 
-	static StateEnum getIthColor(StateEnum[][] board, int index, int var, Check check) 
+	//get state for each check
+	static StateEnum getState(StateEnum[][] board, int index, int var, Check check) 
 	{
 		if (check == Check.Row)
 		{
@@ -37,63 +38,65 @@ public class GameResultResolver
 		return StateEnum.DRAW;
 	}
 
-	static StateEnum getWinner(StateEnum[][] board, int fixed_index, Check check)
+	static StateEnum getResultingState(StateEnum[][] board, int fixedIndex, Check check)
 	{
-		StateEnum color = getIthColor(board, fixed_index, 0, check);
+		StateEnum state = getState(board, fixedIndex, 0, check);
 
-		if (color == StateEnum.DRAW)
+		if (state == StateEnum.DRAW)
 		{
 			return StateEnum.DRAW;
 		}
 
-		for (int var = 1; var < board.length; var++) 
+		for (int i = 1; i < board.length; i++) 
 		{
-			if (color != getIthColor(board, fixed_index, var, check))
+			if (state != getState(board, fixedIndex, i, check))
 			{
 				return StateEnum.DRAW;
 			}
 		}
 
-		return color;
+		return state;
 	}
 
 	public static StateEnum checkForGameResult(StateEnum[][] board)
 	{
-		int N = board.length;
+		//get board dimension. in this demo app we will have n = 3
+		int n = board.length;
 
-		StateEnum winner = StateEnum.DRAW;
+		//assume that resulting state is DRAW
+		StateEnum resultingState = StateEnum.DRAW;
 
 		// Check rows and columns
-		for (int i = 0; i < N; i++) 
+		for (int i = 0; i < n; i++) 
 		{
-			winner = getWinner(board, i, Check.Row);
+			resultingState = getResultingState(board, i, Check.Row);
 
-			if (winner != StateEnum.DRAW)
+			if (resultingState != StateEnum.DRAW)
 			{
-				return winner;
+				return resultingState;
 			}
 
-			winner = getWinner(board, i, Check.Column);
+			resultingState = getResultingState(board, i, Check.Column);
 
-			if (winner != StateEnum.DRAW)
+			if (resultingState != StateEnum.DRAW)
 			{
-				return winner;
+				return resultingState;
 			}
 		}
 
-		winner = getWinner(board, -1, Check.Diagonal);
+		resultingState = getResultingState(board, -1, Check.Diagonal);
 
-		if (winner != StateEnum.DRAW)
+		if (resultingState != StateEnum.DRAW)
 		{
-			return winner;
+			return resultingState;
 		}
 
 		// Check diagonal
-		winner = getWinner(board, -1, Check.ReverseDiagonal);
+		resultingState = getResultingState(board, -1, Check.ReverseDiagonal);
 
-		if (winner != StateEnum.DRAW)
+		if (resultingState != StateEnum.DRAW)
 		{
-			return winner;
+			return resultingState;
 		}
 
 		return StateEnum.DRAW;

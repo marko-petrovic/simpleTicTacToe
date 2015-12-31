@@ -17,6 +17,8 @@
     <dimen name="editTextPaddingLeftAndRight">5dp</dimen>
     
     <!-- Margins -->
-    <dimen name="editTextMarginBottom">8dp</dimen>
+    <dimen name="generalMarginBottom">8dp</dimen>
+    <dimen name="currentResultMarginRight">6dp</dimen>
+    <dimen name="prevResultMarginRight">3dp</dimen>
     
 </resources>

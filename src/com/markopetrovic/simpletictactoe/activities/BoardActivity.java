@@ -17,7 +17,12 @@ public class BoardActivity extends BaseActivity implements OnClickListener
 	//this is Activity where TicTacToe game is being played
 	
 	private TextView descriptionText;
+	private TextView xPlayerName, oPlayerName;
+	private TextView xPlayerCurrentWins, oPlayerCurrentWins;
+	private TextView xPlayerPreviousWins, xPlayerPreviousLoses;
+	private TextView oPlayerPreviousWins, oPlayerPreviousLoses;
 	private Button endMatchButton;
+	private Button playAgainButton;
 	private final int[] boardButtonIds = 
 	{
 		R.id.activity_board_button_1, R.id.activity_board_button_2, R.id.activity_board_button_3,
@@ -36,14 +41,6 @@ public class BoardActivity extends BaseActivity implements OnClickListener
         
         //set all UI components to be ready to start match and games
         setUIstuff();
-         
-        System.out.println
-        (
-        	"BOARD OPONENTS ARE " + 
-        	TicTacToeManager.boardOponents.getxPlayer().getPlayer().getName() + 
-        	" and " + 
-        	TicTacToeManager.boardOponents.getoPlayer().getPlayer().getName()
-        );
     } 
 	
 	@Override
@@ -53,10 +50,37 @@ public class BoardActivity extends BaseActivity implements OnClickListener
     	descriptionText = (TextView)findViewById(R.id.activity_board_textview_board_description);
     	descriptionText.setTypeface(defaultFont);
     	
+    	//xPlayer name and scores values
+    	xPlayerName = (TextView)findViewById(R.id.activity_board_textview_xplayer_name);
+    	xPlayerCurrentWins = (TextView)findViewById(R.id.activity_board_textview_xplayer_current_wins);
+    	xPlayerPreviousWins = (TextView)findViewById(R.id.activity_board_textview_xplayer_prev_wins);
+    	xPlayerPreviousLoses = (TextView)findViewById(R.id.activity_board_textview_xplayer_prev_loses);
+    	xPlayerName.setTypeface(defaultFont);
+    	xPlayerCurrentWins.setTypeface(defaultFont);
+    	xPlayerPreviousWins.setTypeface(defaultFont);
+    	xPlayerPreviousLoses.setTypeface(defaultFont);
+    	
+    	//oPlayer name and scores values
+    	oPlayerName = (TextView)findViewById(R.id.activity_board_textview_oplayer_name);
+    	oPlayerCurrentWins = (TextView)findViewById(R.id.activity_board_textview_oplayer_current_wins);
+    	oPlayerPreviousWins = (TextView)findViewById(R.id.activity_board_textview_oplayer_prev_wins);
+    	oPlayerPreviousLoses = (TextView)findViewById(R.id.activity_board_textview_oplayer_prev_loses);
+    	oPlayerName.setTypeface(defaultFont);
+    	oPlayerCurrentWins.setTypeface(defaultFont);
+    	oPlayerPreviousWins.setTypeface(defaultFont);
+    	oPlayerPreviousLoses.setTypeface(defaultFont);
+    	
+    	//play again button
+    	playAgainButton = (Button)findViewById(R.id.activity_board_button_play_next_game);
+    	playAgainButton.setTypeface(defaultFont);
+    	playAgainButton.setOnClickListener(this);
+    	playAgainButton.setEnabled(false);
+    	
     	//end match button
     	endMatchButton = (Button)findViewById(R.id.activity_board_button_end_match);
     	endMatchButton.setTypeface(defaultFont);
     	endMatchButton.setOnClickListener(this);
+    	endMatchButton.setEnabled(false);
     	
     	//board buttons
     	LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(TicTacToeManager.deviceScreenWidth/4, TicTacToeManager.deviceScreenWidth/4);
@@ -81,7 +105,14 @@ public class BoardActivity extends BaseActivity implements OnClickListener
 		buttonToLock.setEnabled(false);
 	}
 	
-	//unlock all buttons (make them enabled) after new game start
+	//doing the opposite
+	private void unlockButton(int id)
+	{
+		buttonToUnlock = (Button)findViewById(id);
+		buttonToUnlock.setEnabled(true);
+	}
+	
+	//unlock all board buttons (make them enabled) after new game start
 	//also remove their texts
 	//or lock them all and do not remove texts (case when we have a game result)
 	private void unlockOrLockAllButtons(boolean lockThemAll)
@@ -144,9 +175,22 @@ public class BoardActivity extends BaseActivity implements OnClickListener
 	{
 		if (v.getId() == R.id.activity_board_button_end_match) 
 		{
+			//end the whole match by saving gained results and going to scoreboard list
 			TicTacToeManager.recordResultsFromThisMatch((Activity) context);
 			
 			finish();
+		}
+		else if (v.getId() == R.id.activity_board_button_play_next_game)
+		{
+			//users want to play another game so reset everything and let them play
+			unlockOrLockAllButtons(false);
+			
+			TicTacToeManager.boardOponents.setxPlays(true);
+			TicTacToeManager.boardOponents.setCounter(0);
+			TicTacToeManager.initBoard();
+			
+			//lock this button again until game is over
+			lockButton(R.id.activity_board_button_play_next_game);
 		}
 		else
 		{
@@ -166,15 +210,9 @@ public class BoardActivity extends BaseActivity implements OnClickListener
 						+ ", loses " + TicTacToeManager.boardOponents.getoPlayer().getCurrentLoses());
 				//TODO
 				
-				//game resulted and ended, we have to restart it
-				unlockOrLockAllButtons(false);
-				
-				TicTacToeManager.boardOponents.setxPlays(true);
-				TicTacToeManager.boardOponents.setCounter(0);
-				TicTacToeManager.initBoard();
-				
-				//TODO
-				//show some button for restart?
+				//game resulted and ended, we have to restart it, but users will do that by pressing
+				//PLAY AGAIN button. That button will do this job, so just enable button here
+				unlockButton(R.id.activity_board_button_play_next_game);
 			}
 		}
 	}

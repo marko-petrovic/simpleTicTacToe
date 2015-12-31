@@ -30,6 +30,20 @@
 	    <item name="android:textStyle">normal</item>
 	</style>
 	
+    <style name="TicTacToeTextViewResultsStyle" parent="@android:style/Widget.TextView">
+	    <item name="android:textColor">@color/gray_dark</item>
+	    <item name="android:textSize">15sp</item>
+	    <item name="android:gravity">center</item>
+	    <item name="android:textStyle">normal</item>
+	</style>
+    
+    <style name="TicTacToeTextViewNameDescriptionsStyle" parent="@android:style/Widget.TextView">
+	    <item name="android:textColor">@color/gray_dark</item>
+	    <item name="android:textSize">11sp</item>
+	    <item name="android:gravity">left</item>
+	    <item name="android:textStyle">normal</item>
+	</style>
+	
     <style name="TicTacToeTextViewSmallStyle" parent="@android:style/Widget.TextView">
 	    <item name="android:textColor">@color/gray_dark</item>
 	    <item name="android:textSize">11sp</item>
@@ -46,7 +60,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@color/gray_dark</item>
         <item name="android:gravity">center</item>
-        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_height">32dp</item>
         <item name="android:adjustViewBounds">true</item>
         <item name="android:textSize">14sp</item>
         <item name="android:clickable">true</item>
