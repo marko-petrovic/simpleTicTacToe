@@ -18,7 +18,7 @@
     
     <!-- Margins -->
     <dimen name="generalMarginBottom">8dp</dimen>
-    <dimen name="currentResultMarginRight">6dp</dimen>
+    <dimen name="currentResultMarginRight">8dp</dimen>
     <dimen name="prevResultMarginRight">3dp</dimen>
     
 </resources>

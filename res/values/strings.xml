@@ -17,6 +17,10 @@
     <string name="activity_board_button_text">END MATCH</string>
     <string name="activity_board_xplayer_description">X Player</string>
     <string name="activity_board_oplayer_description">O Player</string>
+    <string name="activity_board_description_winner_is">Winner is\u0020</string>
+    <string name="activity_board_description_no_winner_this_time">It\'s a draw, no winner in this game</string>
+    <string name="activity_board_total_scores">total scores:\u0020</string>
+    <string name="activity_board_has_the_first_move">\u0020plays first</string>
     
     
 </resources>

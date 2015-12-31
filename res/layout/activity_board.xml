@@ -135,20 +135,6 @@
 		    
 		</LinearLayout>
 		
-		<LinearLayout 
-		    android:id="@+id/activity_board_xplayer_linlayout_container"
-		    android:layout_height="wrap_content"
-		    android:layout_width="match_parent"
-		    android:orientation="vertical"
-		    android:layout_gravity="center_horizontal"
-		    android:layout_marginBottom="@dimen/generalMarginBottom">
-		    
-		    <TextView 
-		    android:id="@+id/activity_board_textview_xplayer_description"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:text="@string/activity_board_xplayer_description"
-		    android:theme="@style/TicTacToeTextViewNameDescriptionsStyle"/>
 		    
 		    <LinearLayout 
 		        android:layout_height="wrap_content"
@@ -159,7 +145,8 @@
 		    android:id="@+id/activity_board_textview_xplayer_name"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:theme="@style/TicTacToeTextViewStyle"/>   
+		    android:theme="@style/TicTacToeTextViewResultsStyle"
+		    android:textColor="@color/blue"/>   
 		    
 		    <LinearLayout 
 		        android:layout_width="0dp"
@@ -171,7 +158,15 @@
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:theme="@style/TicTacToeTextViewResultsStyle"
+		    android:textColor="@color/blue"
 		    android:layout_marginRight="@dimen/currentResultMarginRight"/> 
+		    
+		    <TextView 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:theme="@style/TicTacToeTextViewSmallStyle"
+		    android:layout_marginRight="@dimen/prevResultMarginRight"
+		    android:text="@string/activity_board_total_scores"/> 
 		    
 		    <TextView 
 		    android:id="@+id/activity_board_textview_xplayer_prev_wins"
@@ -188,22 +183,7 @@
 		        
 		    </LinearLayout>
 		    
-		</LinearLayout>
 		
-		<LinearLayout 
-		    android:id="@+id/activity_board_oplayer_linlayout_container"
-		    android:layout_height="wrap_content"
-		    android:layout_width="match_parent"
-		    android:orientation="vertical"
-		    android:layout_gravity="center_horizontal"
-		    android:layout_marginBottom="@dimen/generalMarginBottom">
-		    
-		    <TextView 
-		    android:id="@+id/activity_board_textview_oplayer_description"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:text="@string/activity_board_oplayer_description"
-		    android:theme="@style/TicTacToeTextViewNameDescriptionsStyle"/>
 		    
 		    <LinearLayout 
 		        android:layout_height="wrap_content"
@@ -214,7 +194,8 @@
 		    android:id="@+id/activity_board_textview_oplayer_name"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:theme="@style/TicTacToeTextViewStyle"/>   
+		    android:theme="@style/TicTacToeTextViewResultsStyle"
+		    android:textColor="@color/red"/>   
 		    
 		    <LinearLayout 
 		        android:layout_width="0dp"
@@ -226,7 +207,15 @@
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:theme="@style/TicTacToeTextViewResultsStyle"
+		    android:textColor="@color/red"
 		    android:layout_marginRight="@dimen/currentResultMarginRight"/> 
+		    
+		    <TextView 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:theme="@style/TicTacToeTextViewSmallStyle"
+		    android:layout_marginRight="@dimen/prevResultMarginRight"
+		    android:text="@string/activity_board_total_scores"/> 
 		    
 		    <TextView 
 		    android:id="@+id/activity_board_textview_oplayer_prev_wins"
@@ -243,9 +232,6 @@
 		        
 		    </LinearLayout>
 		    
-		</LinearLayout>
-		
-		
 		
 		<LinearLayout 
 		    android:layout_width="match_parent"

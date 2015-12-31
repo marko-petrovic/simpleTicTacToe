@@ -19,6 +19,7 @@ public class BoardOpponents
 	private Boolean xPlays = true;
 	//we need counter so if counter gets == n^2 we stop with playing and decide winner state (DRAW, or x or O)
 	private int counter = 0;
+	private boolean previousPlayerWasX = true;
 	
 	private BoardOpponents(BoardPlayer xPlayer, BoardPlayer oPlayer)
 	{
@@ -27,6 +28,7 @@ public class BoardOpponents
 		this.oPlayer = oPlayer;
 		this.xPlays = true;
 		this.counter = 0;
+		this.previousPlayerWasX = true;
 	}
 	
 	public BoardPlayer getxPlayer() 
@@ -59,12 +61,24 @@ public class BoardOpponents
 		this.xPlays = xPlays;
 	}
 
-	public int getCounter() {
+	public int getCounter()
+	{
 		return counter;
 	}
 
-	public void setCounter(int counter) {
+	public void setCounter(int counter) 
+	{
 		this.counter = counter;
+	}
+
+	public boolean isPreviousPlayerWasX() 
+	{
+		return previousPlayerWasX;
+	}
+
+	public void setPreviousPlayerWasX(boolean previousPlayerWasX)
+	{
+		this.previousPlayerWasX = previousPlayerWasX;
 	}
 
 }

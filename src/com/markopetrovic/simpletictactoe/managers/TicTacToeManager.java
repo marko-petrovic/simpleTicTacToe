@@ -429,6 +429,16 @@ public class TicTacToeManager extends Application
 			//we will check for this state in BoardActivity
 			boardOponents.setxPlays(null);
 			
+			//lets also record who played the last so we can switch who plays next by reading this value
+			if (boardOponents.isPreviousPlayerWasX()) 
+			{
+				boardOponents.setPreviousPlayerWasX(false);
+			}
+			else
+			{
+				boardOponents.setPreviousPlayerWasX(true);
+			}
+			
 			if (gameResult == StateEnum.XWINS) 
 			{
 				boardOponents.getxPlayer().setCurrentWins(boardOponents.getxPlayer().getCurrentWins() + 1);
