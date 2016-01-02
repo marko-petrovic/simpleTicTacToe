@@ -39,7 +39,7 @@
         <activity
             android:name="com.markopetrovic.simpletictactoe.activities.ScoreBoardTableActivity"
             android:label="@string/activity_name_board"
-            android:theme="@android:style/Theme.Light" >
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         
     </application>

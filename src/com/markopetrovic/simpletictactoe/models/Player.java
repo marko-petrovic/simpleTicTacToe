@@ -1,6 +1,7 @@
 package com.markopetrovic.simpletictactoe.models;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 public class Player implements Serializable
 {
@@ -54,4 +55,28 @@ public class Player implements Serializable
 	{
 		this.totalGamesLost = matchesLost;
 	}
+	
+	//comparators for sorting lists of players by total games won and lost
+	
+	public static Comparator<Player> ComparatorTotalGamesWon = new Comparator<Player>() 
+	{
+		public int compare(Player p1, Player p2)
+		{
+		   int p1TotalGamesWon = p1.getTotalGamesWon();
+		   int p2TotalGamesWon = p2.getTotalGamesWon();
+
+		   return p2TotalGamesWon - p1TotalGamesWon;
+	   }
+	};
+	
+	public static Comparator<Player> ComparatorTotalGamesLost = new Comparator<Player>() 
+	{
+		public int compare(Player p1, Player p2)
+		{
+		   int p1TotalGamesLost = p1.getTotalGamesLost();
+		   int p2TotalGamesLost = p2.getTotalGamesLost();
+
+		   return p2TotalGamesLost - p1TotalGamesLost;
+	   }
+	};
 }
