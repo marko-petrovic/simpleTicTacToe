@@ -208,8 +208,9 @@ public class BoardActivity extends BaseActivity implements OnClickListener
 				descriptionText.setTextColor(TicTacToeManager.getInstance().getResources().getColor(R.color.red));
 			}
 			
+			//re init board and set counter to 0
 			TicTacToeManager.boardOponents.setCounter(0);
-			TicTacToeManager.initBoard();
+			TicTacToeManager.initBoard(TicTacToeManager.boardDimension);
 			
 			//lock this button again until game is over
 			lockButton(R.id.activity_board_button_play_next_game);

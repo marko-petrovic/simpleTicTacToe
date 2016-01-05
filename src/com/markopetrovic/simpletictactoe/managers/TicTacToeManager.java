@@ -37,6 +37,7 @@ public class TicTacToeManager extends Application
     public static BoardOpponents boardOponents;
     private static int indexX, indexO;
     public static StateEnum[][] board;
+    public static int boardDimension = 3;
 	
 	private static TicTacToeManager sInstance;
 	
@@ -281,7 +282,7 @@ public class TicTacToeManager extends Application
 		
 		//now board opponents are created and we only have to init empty board and that's 
 		//what's needed for a game to start
-		initBoard();
+		initBoard(boardDimension);
 	}
 	
 	//this is maybe not too necessary in our simple demo app case, but if we want to pass arguments for intent.putExtra
@@ -423,6 +424,8 @@ public class TicTacToeManager extends Application
 		//check if we have game result
 		StateEnum gameResult = GameResultResolver.checkForGameResult(board);
 		
+		//we will end our game by settingxPlayes to null only if gameResult is not DRAW
+		//or if counter counted up to NxN so there are no more fields to play with
 		if (gameResult != StateEnum.DRAW || boardOponents.getCounter() == (board.length * board.length)) 
 		{
 			//we have a result for X or O player, so lets use null for xPlays Boolean as third state
@@ -454,15 +457,15 @@ public class TicTacToeManager extends Application
 		return gameResult;
 	}
 	
-	//primitive initialization of an empty board
-	public static void initBoard()
+	//primitive initialization of an empty nxn board
+	public static void initBoard(int boardDimension)
 	{
 		board = null;
-		board = new StateEnum[3][3];
+		board = new StateEnum[boardDimension][boardDimension];
 		
-		for (int i = 0; i < 3; i++) 
+		for (int i = 0; i < boardDimension; i++) 
 		{
-			for (int j = 0; j < 3; j++) 
+			for (int j = 0; j < boardDimension; j++) 
 			{
 				board[i][j] = StateEnum.DRAW;
 			}

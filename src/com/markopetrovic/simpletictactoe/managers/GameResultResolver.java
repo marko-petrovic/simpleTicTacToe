@@ -66,7 +66,7 @@ public class GameResultResolver
 		//assume that resulting state is DRAW
 		StateEnum resultingState = StateEnum.DRAW;
 
-		// Check rows and columns
+		//check rows and columns
 		for (int i = 0; i < n; i++) 
 		{
 			resultingState = getResultingState(board, i, Check.Row);
@@ -84,6 +84,7 @@ public class GameResultResolver
 			}
 		}
 
+		//checking first diagonal
 		resultingState = getResultingState(board, -1, Check.Diagonal);
 
 		if (resultingState != StateEnum.DRAW)
@@ -91,14 +92,15 @@ public class GameResultResolver
 			return resultingState;
 		}
 
-		// Check diagonal
+		//checking second diagonal
 		resultingState = getResultingState(board, -1, Check.ReverseDiagonal);
 
 		if (resultingState != StateEnum.DRAW)
 		{
 			return resultingState;
 		}
-
+		
+		//if there was no return so far, which would be anything but not DRAW, return DRAW
 		return StateEnum.DRAW;
 	}
 }
