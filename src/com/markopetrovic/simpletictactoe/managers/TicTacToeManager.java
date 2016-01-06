@@ -351,6 +351,7 @@ public class TicTacToeManager extends Application
 		return sInstance.getApplicationContext().getResources().getString(resId);
 	}
 
+	//method to update board and return result if there's result
 	public static StateEnum updateBoard(int id) 
 	{
 		//positions in board
@@ -358,6 +359,7 @@ public class TicTacToeManager extends Application
 		int n = 0;
 		
 		//depending on which button was clicked we will map m and n
+		//m is for row, n is for column
 		switch (id) 
 		{
 			case R.id.activity_board_button_1:
