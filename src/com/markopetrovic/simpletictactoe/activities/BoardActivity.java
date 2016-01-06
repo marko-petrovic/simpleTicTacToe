@@ -217,10 +217,11 @@ public class BoardActivity extends BaseActivity implements OnClickListener
 		}
 		else
 		{
-			//must be any of board buttons
+			//must be any of board buttons clicked
+			//this method only updates button representation and locks it 
 			updateButton(v.getId());
 			
-			//check if we have game result
+			//check if we have game result by updating board 
 			gameResult = TicTacToeManager.updateBoard(v.getId());
 			
 			//we can use Booleans's null value to indicate that this game has result
@@ -234,7 +235,7 @@ public class BoardActivity extends BaseActivity implements OnClickListener
 				{
 					descriptionText.setText(TicTacToeManager.getStringValue(R.string.activity_board_description_no_winner_this_time));
 				}
-				else if (gameResult.toString().contains(GameResultResolver.StateEnum.XWINS.toString()))
+				else if (gameResult.toString().contains(GameResultResolver.StateEnum.X.toString()))
 				{
 					descriptionText.setText(TicTacToeManager.getStringValue(R.string.activity_board_description_winner_is) + 
 							TicTacToeManager.boardOponents.getxPlayer().getPlayer().getName());

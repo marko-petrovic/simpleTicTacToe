@@ -3,11 +3,11 @@ package com.markopetrovic.simpletictactoe.managers;
 public class GameResultResolver 
 {
 	// we will use this class' methods to resolve if there was game result
-	// result can be DRAW, XWINS, OWINS
+	// result can be DRAW, X, O
 
 	public enum StateEnum 
 	{
-		DRAW, XWINS, OWINS
+		DRAW, X, O
 	};
 
 	public enum Check 

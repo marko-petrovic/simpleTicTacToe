@@ -359,7 +359,7 @@ public class TicTacToeManager extends Application
 		int rowPosition = 0;
 		int columnPosition = 0;
 		
-		//depending on which button was clicked we will positions
+		//depending on which button was clicked we will set positions
 		switch (id) 
 		{
 			case R.id.activity_board_button_1:
@@ -372,30 +372,30 @@ public class TicTacToeManager extends Application
 				columnPosition = 1;
 				break;
 				
-			case R.id.activity_board_button_3:
-				rowPosition = 0;
-				columnPosition = 2;
-				break;
+																	case R.id.activity_board_button_3:
+																		rowPosition = 0;
+																		columnPosition = 2;
+																		break;
 				
 			case R.id.activity_board_button_4:
 				rowPosition = 1;
 				columnPosition = 0;
 				break;
 				
-			case R.id.activity_board_button_5:
-				rowPosition = 1;
-				columnPosition = 1;
-				break;
+																	case R.id.activity_board_button_5:
+																		rowPosition = 1;
+																		columnPosition = 1;
+																		break;
 				
 			case R.id.activity_board_button_6:
 				rowPosition = 1;
 				columnPosition = 2;
 				break;
 				
-			case R.id.activity_board_button_7:
-				rowPosition = 2;
-				columnPosition = 0;
-				break;
+																	case R.id.activity_board_button_7:
+																		rowPosition = 2;
+																		columnPosition = 0;
+																		break;
 				
 			case R.id.activity_board_button_8:
 				rowPosition = 2;
@@ -411,12 +411,14 @@ public class TicTacToeManager extends Application
 		//now see who played and set board values accordingly
 		if (boardOponents.getxPlays().booleanValue())
 		{
-			board[rowPosition][columnPosition] = StateEnum.XWINS;
+			board.getBoard()[rowPosition][columnPosition] = StateEnum.X;
+			updateBoardSums(rowPosition, columnPosition, StateEnum.X);
 			boardOponents.setxPlays(false);
 		}
 		else
 		{
-			board[rowPosition][columnPosition] = StateEnum.OWINS;
+			board.getBoard()[rowPosition][columnPosition] = StateEnum.O;
+			updateBoardSums(rowPosition, columnPosition, StateEnum.O);
 			boardOponents.setxPlays(true);
 		}
 		
@@ -424,11 +426,11 @@ public class TicTacToeManager extends Application
 		boardOponents.setCounter(boardOponents.getCounter() + 1);
 		
 		//check if we have game result
-		StateEnum gameResult = GameResultResolver.checkForGameResult(board);
+		StateEnum gameResult = GameResultResolver.checkForGameResult(board.getBoard());
 		
 		//we will end our game by settingxPlayes to null only if gameResult is not DRAW
 		//or if counter counted up to NxN so there are no more fields to play with
-		if (gameResult != StateEnum.DRAW || boardOponents.getCounter() == (board.length * board.length)) 
+		if (gameResult != StateEnum.DRAW || boardOponents.getCounter() == (board.getBoard().length * board.getBoard().length)) 
 		{
 			//we have a result for X or O player, so lets use null for xPlays Boolean as third state
 			//we will check for this state in BoardActivity
@@ -444,12 +446,12 @@ public class TicTacToeManager extends Application
 				boardOponents.setPreviousPlayerWasX(true);
 			}
 			
-			if (gameResult == StateEnum.XWINS) 
+			if (gameResult == StateEnum.X) 
 			{
 				boardOponents.getxPlayer().setCurrentWins(boardOponents.getxPlayer().getCurrentWins() + 1);
 				boardOponents.getoPlayer().setCurrentLoses(boardOponents.getoPlayer().getCurrentLoses() + 1);
 			}
-			else if (gameResult == StateEnum.OWINS) 
+			else if (gameResult == StateEnum.O) 
 			{
 				boardOponents.getxPlayer().setCurrentLoses(boardOponents.getxPlayer().getCurrentLoses() + 1);
 				boardOponents.getoPlayer().setCurrentWins(boardOponents.getoPlayer().getCurrentWins() + 1);
@@ -457,6 +459,39 @@ public class TicTacToeManager extends Application
 		}
 		
 		return gameResult;
+	}
+	
+	//update sums of rows, columns and possibly diagonals based on 
+	//which player played what
+	public static void updateBoardSums(int rowPosition, int columnPosition, StateEnum whoPlayed)
+	{
+		int valueToBeAdded = 0;
+		
+		if (whoPlayed == StateEnum.X) 
+		{
+			valueToBeAdded++;
+		}
+		else
+		{
+			valueToBeAdded--;
+		}
+		
+		board.getRowValue()[rowPosition] = board.getRowValue()[rowPosition] + valueToBeAdded;
+		board.getColumnValue()[columnPosition] = board.getColumnValue()[columnPosition] + valueToBeAdded;
+		if (rowPosition == columnPosition)
+		{
+			//this is definitely \ diagonal 
+			board.getDiagonalValue()[0] = board.getDiagonalValue()[0] + valueToBeAdded;
+		}
+		
+		//it can also be / diagonal if position is central or if second condition is fulfilled
+		if (
+				rowPosition == board.getCentralPosition() && columnPosition == board.getCentralPosition() ||
+				(rowPosition + columnPosition) == board.getBoard().length - 1
+		   )
+		{
+			board.getDiagonalValue()[1] = board.getDiagonalValue()[1] + valueToBeAdded;
+		}
 	}
 	
 	//initialization of NxN board and its row, column and diagonal sums
@@ -467,16 +502,8 @@ public class TicTacToeManager extends Application
 					new StateEnum[boardDimension][boardDimension],
 					new int[boardDimension],
 					new int[boardDimension],
-					new int[2]
+					new int[2],
+					boardDimension
 				);
-		
-		//
-		for (int i = 0; i < boardDimension; i++) 
-		{
-			for (int j = 0; j < boardDimension; j++) 
-			{
-				board[i][j] = StateEnum.DRAW;
-			}
-		}
 	}
 }

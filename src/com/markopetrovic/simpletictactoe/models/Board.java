@@ -15,6 +15,7 @@ public class Board
 	private int[] rowValue;
 	private int[] columnValue;
 	private int[] diagonalValue;
+	private int centralPosition;
 
 	public static Board createBoard
 	(StateEnum[][] board, int[] rowValue, int[] columnValue, int[] diagonalValue, int boardDimension)
@@ -43,16 +44,17 @@ public class Board
 		}
 		
 		//now return new Board
-		return new Board(board, rowValue, columnValue, diagonalValue);
+		return new Board(board, rowValue, columnValue, diagonalValue, boardDimension);
 	}
 	
-	private Board(StateEnum[][] board, int[] rowValue, int[] columnValue, int[] diagonalValue)
+	private Board(StateEnum[][] board, int[] rowValue, int[] columnValue, int[] diagonalValue, int boardDimension)
 	{
 		super();
 		this.board = board;
 		this.rowValue = rowValue;
 		this.columnValue = columnValue;
 		this.diagonalValue = diagonalValue;
+		this.centralPosition = (boardDimension - 1) / 2;
 	}
 	
 	public StateEnum[][] getBoard() 
@@ -93,5 +95,15 @@ public class Board
 	public void setDiagonalValue(int[] diagonalValue) 
 	{
 		this.diagonalValue = diagonalValue;
+	}
+
+	public int getCentralPosition() 
+	{
+		return centralPosition;
+	}
+
+	public void setCentralPosition(int centralPosition) 
+	{
+		this.centralPosition = centralPosition;
 	}
 }
