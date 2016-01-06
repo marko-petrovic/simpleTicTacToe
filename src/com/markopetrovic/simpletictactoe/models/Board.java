@@ -9,13 +9,14 @@ public class Board
 	//it also has int[] arrays that represent sums of rows, columns and diagonals
 	//idea is that X player adds 1 to row/column/diagonal and O player adds -1
 	//evaluation of a board will be based on checking if one of these three is
-	//either 3 either -3 by its total value
+	//either N either -N by its total value
 	
 	private StateEnum[][] board;
 	private int[] rowValue;
 	private int[] columnValue;
 	private int[] diagonalValue;
 	private int centralPosition;
+	private int boardDimension;
 
 	public static Board createBoard
 	(StateEnum[][] board, int[] rowValue, int[] columnValue, int[] diagonalValue, int boardDimension)
@@ -55,6 +56,7 @@ public class Board
 		this.columnValue = columnValue;
 		this.diagonalValue = diagonalValue;
 		this.centralPosition = (boardDimension - 1) / 2;
+		this.boardDimension = boardDimension;
 	}
 	
 	public StateEnum[][] getBoard() 
@@ -105,5 +107,15 @@ public class Board
 	public void setCentralPosition(int centralPosition) 
 	{
 		this.centralPosition = centralPosition;
+	}
+
+	public int getBoardDimension() 
+	{
+		return boardDimension;
+	}
+
+	public void setBoardDimension(int boardDimension) 
+	{
+		this.boardDimension = boardDimension;
 	}
 }

@@ -234,6 +234,7 @@ public class BoardActivity extends BaseActivity implements OnClickListener
 				if (gameResult.toString().contains(GameResultResolver.StateEnum.DRAW.toString()))
 				{
 					descriptionText.setText(TicTacToeManager.getStringValue(R.string.activity_board_description_no_winner_this_time));
+					descriptionText.setTextColor(getResources().getColor(R.color.gray_mediumlight));
 				}
 				else if (gameResult.toString().contains(GameResultResolver.StateEnum.X.toString()))
 				{
