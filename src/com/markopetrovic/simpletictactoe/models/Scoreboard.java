@@ -7,6 +7,7 @@ import java.util.Collections;
 public class Scoreboard implements Serializable
 {
 	//Scoreboard is a simple ArrayList of Players who played so far
+	
 	private ArrayList<Player> scoreBoardPlayers;
 	private static final long serialVersionUID = 1L;
 	

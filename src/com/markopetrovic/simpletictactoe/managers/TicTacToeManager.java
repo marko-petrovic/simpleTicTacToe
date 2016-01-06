@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import com.markopetrovic.simpletictactoe.R;
 import com.markopetrovic.simpletictactoe.activities.ScoreBoardTableActivity;
 import com.markopetrovic.simpletictactoe.managers.GameResultResolver.StateEnum;
+import com.markopetrovic.simpletictactoe.models.Board;
 import com.markopetrovic.simpletictactoe.models.BoardOpponents;
 import com.markopetrovic.simpletictactoe.models.BoardPlayer;
 import com.markopetrovic.simpletictactoe.models.Player;
@@ -36,7 +37,7 @@ public class TicTacToeManager extends Application
     public static Scoreboard scoreboardPlayers;
     public static BoardOpponents boardOponents;
     private static int indexX, indexO;
-    public static StateEnum[][] board;
+    public static Board board;
     public static int boardDimension = 3;
 	
 	private static TicTacToeManager sInstance;
@@ -355,68 +356,67 @@ public class TicTacToeManager extends Application
 	public static StateEnum updateBoard(int id) 
 	{
 		//positions in board
-		int m = 0;
-		int n = 0;
+		int rowPosition = 0;
+		int columnPosition = 0;
 		
-		//depending on which button was clicked we will map m and n
-		//m is for row, n is for column
+		//depending on which button was clicked we will positions
 		switch (id) 
 		{
 			case R.id.activity_board_button_1:
-				m = 0;
-				n = 0;
+				rowPosition = 0;
+				columnPosition = 0;
 				break;
 
 			case R.id.activity_board_button_2:
-				m = 0;
-				n = 1;
+				rowPosition = 0;
+				columnPosition = 1;
 				break;
 				
 			case R.id.activity_board_button_3:
-				m = 0;
-				n = 2;
+				rowPosition = 0;
+				columnPosition = 2;
 				break;
 				
 			case R.id.activity_board_button_4:
-				m = 1;
-				n = 0;
+				rowPosition = 1;
+				columnPosition = 0;
 				break;
 				
 			case R.id.activity_board_button_5:
-				m = 1;
-				n = 1;
+				rowPosition = 1;
+				columnPosition = 1;
 				break;
 				
 			case R.id.activity_board_button_6:
-				m = 1;
-				n = 2;
+				rowPosition = 1;
+				columnPosition = 2;
 				break;
 				
 			case R.id.activity_board_button_7:
-				m = 2;
-				n = 0;
+				rowPosition = 2;
+				columnPosition = 0;
 				break;
 				
 			case R.id.activity_board_button_8:
-				m = 2;
-				n = 1;
+				rowPosition = 2;
+				columnPosition = 1;
 				break;
 				
 			case R.id.activity_board_button_9:
-				m = 2;
-				n = 2;
+				rowPosition = 2;
+				columnPosition = 2;
 				break;
 		}
 		
 		//now see who played and set board values accordingly
 		if (boardOponents.getxPlays().booleanValue())
 		{
-			board[m][n] = StateEnum.XWINS;
+			board[rowPosition][columnPosition] = StateEnum.XWINS;
 			boardOponents.setxPlays(false);
 		}
 		else
 		{
-			board[m][n] = StateEnum.OWINS;
+			board[rowPosition][columnPosition] = StateEnum.OWINS;
 			boardOponents.setxPlays(true);
 		}
 		
@@ -459,12 +459,18 @@ public class TicTacToeManager extends Application
 		return gameResult;
 	}
 	
-	//primitive initialization of an empty nxn board
+	//initialization of NxN board and its row, column and diagonal sums
 	public static void initBoard(int boardDimension)
 	{
-		board = null;
-		board = new StateEnum[boardDimension][boardDimension];
+		board = Board.createBoard
+				(
+					new StateEnum[boardDimension][boardDimension],
+					new int[boardDimension],
+					new int[boardDimension],
+					new int[2]
+				);
 		
+		//
 		for (int i = 0; i < boardDimension; i++) 
 		{
 			for (int j = 0; j < boardDimension; j++) 
